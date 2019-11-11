@@ -1,4 +1,4 @@
-from init.init_imports import InfraX, Save, DaPr, Numbers, wmi_evt_qu
+from init.init_imports import Infra, Save, DaPr, Numbers, wmi_evt_qu
 from init.init_imports import winreg, psutil, socket, platform, wmi, subprocess, netifaces, show_status
 
 
@@ -9,7 +9,7 @@ class Entry:
 
     @show_status()
     def get_installed_win_updates(self, log_path, log_file):
-        raw = InfraX.cmd_con_lite("wmic qfe list")
+        raw = Infra.cmd_con_lite("wmic qfe list")
         # print(raw)
         processed = []
         for line in raw:
@@ -72,7 +72,7 @@ class Entry:
             "pc_name": socket.getfqdn(socket.gethostname()),
             "os_version": platform.platform(),
             "ip_addr": s.getsockname()[0],
-            "mac": str.upper(InfraX.get_mac_address()),
+            "mac": str.upper(Infra.get_mac_address()),
             "default_gateway": netifaces.gateways()['default'][netifaces.AF_INET][0],
             "architecture": platform.architecture()[0],
             "cpu_name": wmi_data['cpu_name'],
@@ -182,10 +182,7 @@ class Entry:
         headers = ['item', self.all_data['pc_name']]
         data_f = []
         for k, v in self.all_data.items():
-            data = {}
-            data[headers[0]] = k
-            data[headers[1]] = v
-            data_f.append(data)
+            data_f.append({headers[0]: k, headers[1]: v})
         Save.toCSV(log_path, log_file, headers, data_f)
 
     def wmi_con(self):

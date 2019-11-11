@@ -1,12 +1,16 @@
 import os
-from Delta.init.init_imports import InfraX
+from init.init_imports import Infra
 
-# os.chdir(os.getcwd)
+builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
+root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
+target = "{}\\infoCollector.py".format(root)
+params = "--onefile"
+dis_dir = "{}\\dist\\".format(root)
+app_cfg_dir = "{}\\config".format(root)
 
-builder = "E:\Resource\CodeOplex\Envs\LF-Nova\Scripts\pyinstaller.exe"
-target = "E:\Resource\CodeOplex\LF-Cyber\Delta\infoCollector.py"
-paramas = "--onefile"
-dis_dir = "E:\Resource\CodeOplex\LF-Cyber\Delta\dist"
-InfraX.remove_ff(dis_dir+"\\infoCollector")
-os.system("{} {} {}".format(builder,target,paramas))
+app_cfg = Infra.read_json(app_cfg_dir,'app_config.json')
+version = app_cfg['version']
+print(version)
+Infra.remove_ff(dis_dir)
+os.system("{} {} {}".format(builder, target, params))
 os.system("explorer.exe {}".format(dis_dir))

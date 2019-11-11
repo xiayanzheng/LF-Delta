@@ -1,5 +1,5 @@
-from Delta.init.init_imports import PrettyTable, InfraX
-from Delta.init.init_imports import TelnetConn as Telnet_conn
+from init.init_imports import PrettyTable, Infra
+from init.init_imports import TelnetConn as Telnet_conn
 
 
 class TelnetSe(Telnet_conn):
@@ -22,7 +22,7 @@ class TelnetSe(Telnet_conn):
 
 
 if __name__ == '__main__':
-    raw_cfg = InfraX.read_json("..\\config\\", "network_device_config.json")
+    raw_cfg = Infra.read_json("..\\config\\", "network_device_config.json")
 
     tc = TelnetSe()
     tc.user_groups = raw_cfg['groups']
