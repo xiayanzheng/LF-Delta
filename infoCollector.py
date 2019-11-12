@@ -12,8 +12,10 @@ def main():
     hostname = socket.getfqdn(socket.gethostname())
     if not os.path.exists(".\\Reports\\"):
         os.mkdir(".\\Reports\\")
-    log_path = '.\\Reports\\[{}]_{}'.format(hostname, datetime.datetime.now().strftime('%Y-%m-%d-%I-%M-%S'))
-    os.mkdir(log_path)
+    group_name = input("GroupName:")
+    log_folder = "{}_{}".format(group_name,datetime.datetime.now().strftime('%Y-%m-%d-%I-%M-%S'))
+    log_path = '.\\Reports\\{}\\{}'.format(log_folder,hostname)
+    os.makedirs(log_path)
     server.get_basic_info(log_path, 'host_basic_data.csv')
     server.get_disk_partitions(log_path, 'disk_info.csv')
     default_gateway = server.all_data['default_gateway']

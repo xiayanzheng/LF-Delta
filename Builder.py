@@ -3,8 +3,8 @@ from init.init_imports import Infra
 
 builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
 root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
-target = "{}\\infoCollector.py".format(root)
 params = "--onefile"
+target = "{}\\infoCollector.py".format(root)
 dis_dir = "{}\\dist\\".format(root)
 app_cfg_dir = "{}\\config".format(root)
 
