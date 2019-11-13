@@ -1,13 +1,1 @@
-{
-  "version":"1.0.1",
-  "func_name_dict": {
-            "get_installed_win_updates": "Get Windows Installed Updates",
-            "get_installed_software_list": "Get Installed Software List",
-            "get_basic_info": "Get Basic Info",
-            "get_disk_partitions": "Get Disk Info",
-            "get_network_basic": "Get Network Basic",
-            "get_event_log": "Get Event Log",
-            "get_ping_result": "Get Ping Result",
-            "get_summary": "Get Summary"
-        }
-}
+{"version": "1.0.1", "func_name_dict": {"get_installed_win_updates": "Get Windows Installed Updates", "get_installed_software_list": "Get Installed Software List", "get_basic_info": "Get Basic Info", "get_disk_partitions": "Get Disk Info", "get_network_basic": "Get Network Basic", "get_event_log": "Get Event Log", "get_ping_result": "Get Ping Result", "get_summary": "Get Summary"}, "group": ["HCMC", "HSCN", "HCCN"]}

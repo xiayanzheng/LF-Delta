@@ -1,4 +1,4 @@
-import os, socket, datetime,asyncio
+import os, socket, datetime, asyncio, prettytable
 from lfcomlib.Jessica import DaPr, Save, Numbers, Infra
 from lfcomlib.Jessica.Log import GetWindowsEventLogByWmiQuery
 import winreg, psutil, platform, wmi, subprocess, netifaces
