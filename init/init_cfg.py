@@ -19,6 +19,5 @@ class GlobalConfig:
         self.app_config = Infra.read_json(self.config_root,self.app_config_file_name)
         self.server_config = Infra.read_json(self.config_root, 'server_config.json')
         self.windows_event_config = self.server_config['windows_event_config']
-        self.func_name_dict = self.app_config['func_name_dict']
         self.version = self.app_config['version']
         self.group = self.app_config['group']

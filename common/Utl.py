@@ -1,5 +1,6 @@
 from functools import wraps
-from init.init_imports import global_config
+from init.init_imports import DaPr
+
 
 class Entry:
 
@@ -9,22 +10,15 @@ class Entry:
             print(data)
 
 
-def show_status():
-    def decorate(func):
-        msg = ''
-        func_name = func.__name__
-        func_name_dict = global_config.func_name_dict
-        format_i = "[{}]{}"
-        if func_name in list(func_name_dict.keys()):
-            msg = func_name_dict[func_name]
-        else:
-            msg = func.__name__
+def show_status(func):
+    msg = '[{}]{}'
+    format_i = DaPr.insert_value_to_list_and_merge([s.capitalize() for s in func.__name__.split("_")], " ")
 
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            print(format_i.format(msg,"Start"))
-            func_obj = func(*args, **kwargs)
-            print(format_i.format(msg,"End"))
-            return func_obj
-        return wrapper
-    return decorate
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print(msg.format(format_i, "Start"))
+        func_obj = func(*args, **kwargs)
+        print(msg.format(format_i, "End"))
+        return func_obj
+
+    return wrapper

@@ -1,13 +1,15 @@
 from init.init_imports import Infra, Save, DaPr, Numbers, wmi_evt_qu
-from init.init_imports import winreg, psutil, socket, platform, wmi, subprocess, netifaces, show_status
+from init.init_imports import psutil, socket, platform, wmi, subprocess, netifaces, show_status, winreg, os
+import re
 
 
 class Entry:
 
     def __init__(self):
         self.all_data = None
+        self.wmi_connector = wmi.WMI()
 
-    @show_status()
+    @show_status
     def get_installed_win_updates(self, log_path, log_file):
         raw = Infra.cmd_con_lite("wmic qfe list")
         # print(raw)
@@ -29,75 +31,70 @@ class Entry:
         # print(result)
         Save.toCSV(log_path, log_file, key, result)
 
-    @show_status()
-    def get_installed_software_list(self):
-        regRoot = winreg.ConnectRegistry(None, winreg.HKEY_LOCAL_MACHINE)
-        subDir = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-        installed_soft64 = winreg.OpenKey(regRoot, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
-        count = winreg.QueryInfoKey(installed_soft64)[0]
-        print(count)
-        for i in range(count):
-            # 3.穷举每个键，获取键名
-            subKeyName = winreg.EnumKey(installed_soft64, i)
-            subDir_2 = r'%s\%s' % (subDir, subKeyName)
-            # 4.根据获取的键名拼接之前的路径作为参数，获取当前键下所属键的控制
-            keyHandle_2 = winreg.OpenKey(regRoot, subDir_2)
-            count2 = winreg.QueryInfoKey(keyHandle_2)[1]
-            for j in range(count2):
-                # 5.穷举每个键，获取键名、键值以及数据类型
-                name, value, type = winreg.EnumValue(keyHandle_2, j)
-                # print("name:{},value：{}，Type：{}".format(name,value,type))
-                ss = {}
-                if name == 'DisplayName':
-                    ss['name'] = value
-                elif name == 'DisplayVersion':
-                    ss['Version'] = value
-                if ss:
-                    print(ss)
-                # if ('ProfileImagePath' in name and 'Users' in value):
-                #     print(value)
-            winreg.CloseKey(keyHandle_2)  # 读写操作结束后关闭键
+    @show_status
+    def get_basic_info(self, log_path, log_file, debug=False):
+        def get_cpu_name():
+            wmi_data = {}
+            for cpu in self.wmi_connector.Win32_Processor():
+                wmi_data['cpu_name'] = cpu.Name
+            return wmi_data
 
-        winreg.CloseKey(installed_soft64)
-        winreg.CloseKey(regRoot)
+        def get_hardware_info():
+            # os.system("wmic qfe list")
+            net_io = psutil.net_io_counters()
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            info = {
+                "pc_name": socket.getfqdn(socket.gethostname()),
+                "os_version": platform.platform(),
+                "ip_addr": s.getsockname()[0],
+                "mac": str.upper(Infra.get_mac_address()),
+                "default_gateway": netifaces.gateways()['default'][netifaces.AF_INET][0],
+                "architecture": platform.architecture()[0],
+                "cpu_name": get_cpu_name()['cpu_name'],
+                "cpu_family": platform.processor(),
+                "cpu_percent": psutil.cpu_percent(interval=1),
+                "cpu_count": psutil.cpu_count(),
+                "process_count": len(psutil.pids()),
+                "memory_used_percent": psutil.virtual_memory().percent,
+                "memory_total_GB": Numbers.byte_to_gb(psutil.virtual_memory().total, 2),
+                "memory_available_GB": Numbers.byte_to_gb(psutil.virtual_memory().available, 2),
+                "memory_used_GB": Numbers.byte_to_gb(psutil.virtual_memory().used, 2),
+                "memory_free_GB": Numbers.byte_to_gb(psutil.virtual_memory().free, 2),
+                "network_io_sent_GB": Numbers.byte_to_gb(net_io[0], 2),
+                "network_io_recv_GB": Numbers.byte_to_gb(net_io[1], 2),
+                "network_io_packets_sent": net_io[2],
+                "network_io_packets_recv": net_io[3],
+            }
+            header = ['item', 'data']
+            data = []
+            for k, v in info.items():
+                data.append({'item': k, 'data': v})
+            if not debug:
+                Save.toCSV(log_path, log_file, header, data)
+            self.all_data = info
 
-    @show_status()
-    def get_basic_info(self, log_path, log_file):
-        # os.system("wmic qfe list")
-        wmi_data = self.wmi_con()
-        net_io = psutil.net_io_counters()
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        info = {
-            "pc_name": socket.getfqdn(socket.gethostname()),
-            "os_version": platform.platform(),
-            "ip_addr": s.getsockname()[0],
-            "mac": str.upper(Infra.get_mac_address()),
-            "default_gateway": netifaces.gateways()['default'][netifaces.AF_INET][0],
-            "architecture": platform.architecture()[0],
-            "cpu_name": wmi_data['cpu_name'],
-            "cpu_family": platform.processor(),
-            "cpu_percent": psutil.cpu_percent(interval=1),
-            "cpu_count": psutil.cpu_count(),
-            "process_count": len(psutil.pids()),
-            "memory_used_percent": psutil.virtual_memory().percent,
-            "memory_total_GB": Numbers.byte_to_gb(psutil.virtual_memory().total, 2),
-            "memory_available_GB": Numbers.byte_to_gb(psutil.virtual_memory().available, 2),
-            "memory_used_GB": Numbers.byte_to_gb(psutil.virtual_memory().used, 2),
-            "memory_free_GB": Numbers.byte_to_gb(psutil.virtual_memory().free, 2),
-            "network_io_sent_GB": Numbers.byte_to_gb(net_io[0], 2),
-            "network_io_recv_GB": Numbers.byte_to_gb(net_io[1], 2),
-            "network_io_packets_sent": net_io[2],
-            "network_io_packets_recv": net_io[3],
-        }
-        header = ['item', 'data']
-        data = []
-        for k, v in info.items():
-            data.append({'item': k, 'data': v})
-        Save.toCSV(log_path, log_file, header, data)
-        self.all_data = info
+        def get_kav_update_status():
+            kav_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\KasperskyLab\Binaries\KES_X86")
+            avp_com = "avp.com"
+            kav_install_path, _ = winreg.QueryValueEx(kav_key, avp_com)
+            kav_install_path = kav_install_path[0:len(kav_install_path) - len(avp_com)]
+            curr_dir = os.getcwd()
+            os.chdir(kav_install_path)
+            kav_version_query = "{} {} {}".format(avp_com, "STATISTICS", "Updater")
+            raw = Infra.cmd_con_lite(kav_version_query)
+            os.chdir(curr_dir)
+            valid = ["Start", "Finish"]
+            for line in raw:
+                for i in range(len(valid)):
+                    key = valid[i]
+                    if key in line:
+                        self.all_data["kav_update_{}_time".format(key).lower()] = DaPr.match_datetime_from_str(line)
 
-    @show_status()
+        get_hardware_info()
+        get_kav_update_status()
+
+    @show_status
     def get_disk_partitions(self, log_path, log_file):
         info = {
             "disk_partitions": psutil.disk_partitions(),
@@ -126,7 +123,7 @@ class Entry:
             except:
                 pass
 
-    @show_status()
+    @show_status
     def get_network_basic(self):
         fi_data = {}
 
@@ -141,7 +138,7 @@ class Entry:
 
         print(fi_data)
 
-    @show_status()
+    @show_status
     def get_event_log(self, cfg_set, log_path, log_file):
         wmi_evt_qu.disable_insertion_strings = False
         base = []
@@ -162,7 +159,7 @@ class Entry:
             base = [{'result': 'No data'}]
         Save.toCSV(log_path, log_file, key, base)
 
-    @show_status()
+    @show_status
     def get_ping_result(self, ip, log_path, log_file):
         cmd = "ping {}".format(ip)
         p = subprocess.Popen(cmd,
@@ -170,14 +167,37 @@ class Entry:
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE,
                              shell=True)
-        # for line in iter(p.stdout.readline, b''):
-        #     de_line = line.decode('gb2312')
-        # p.stdout.close()
-        # p.wait()
         data = p.stdout.read().decode('gb2312')
         Save.toTXT(log_path, log_file, data)
 
-    @show_status()
+    @show_status
+    def get_license_key(self, log_path, log_file, debug=False):
+        all_license = []
+
+        def windows():
+            license_ = self.wmi_connector.query("select * from SoftwareLicensingService")
+            for lic in license_:
+                buck = {"name": "Microsoft Windows "}
+                if hasattr(lic, 'OA3xOriginalProductKey'):
+                    windows_license = getattr(lic, 'OA3xOriginalProductKey')
+                    if hasattr(lic, 'Version'):
+                        buck["name"] = buck['name'] + getattr(lic, 'Version')
+                        buck["license"] = windows_license
+                    else:
+                        buck["license"] = windows_license
+                else:
+                    buck["license"] = None
+                all_license.append(buck)
+
+        def save():
+            keys = list(all_license[0].keys())
+            Save.toCSV(log_path, log_file, keys, all_license)
+
+        windows()
+        if not debug:
+            save()
+
+    @show_status
     def get_summary(self, log_path, log_file):
         headers = ['item', self.all_data['pc_name']]
         data_f = []
@@ -185,22 +205,18 @@ class Entry:
             data_f.append({headers[0]: k, headers[1]: v})
         Save.toCSV(log_path, log_file, headers, data_f)
 
-    def wmi_con(self):
-        wmi_data = {}
-        w = wmi.WMI()  # can put other server here if needed
-
-        for cpu in w.Win32_Processor():
-            wmi_data['cpu_name'] = cpu.Name
-
-        times = DaPr.string_to_datetime('2019/10/12')
-
-        # for log in w.Win32_NTLogEvent(EventType=2, Logfile="System"):
-        #     print(log)
-
-        # print("________________name_space____________________")
-        # for process in w.Win32_Process():
-        #     print(process.ProcessId, process.Name)
-        # print("________________services____________________")
-        # for service in w.Win32_Service():
-        #     print(service.ProcessId, service.Name)
-        return wmi_data
+    @show_status
+    def get_installed_software(self, log_path, log_file):
+        keys = ['Caption', 'Version', 'InstallDate', 'InstallLocation']
+        installed = []
+        win32_product = self.wmi_connector.query("Select * from Win32_Product")
+        for x in win32_product:
+            installed_temp = {}
+            for key in keys:
+                if hasattr(x, key):
+                    installed_temp[key] = getattr(x, key)
+                else:
+                    installed_temp[key] = None
+            installed.append(installed_temp)
+        keys = list(installed[0].keys())
+        Save.toCSV(log_path, log_file, keys, installed)

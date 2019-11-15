@@ -1,4 +1,4 @@
 from handle_Server import server
 
-server.get_network_basic()
+server.get_basic_info('','',True)
 
