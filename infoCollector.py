@@ -52,7 +52,7 @@ def get_server_data(log_path):
     server.get_installed_software(log_path, 'installed_software.csv')
     default_gateway = server.all_data['default_gateway']
     server.get_ping_result(default_gateway, log_path, 'ping_{}.txt'.format(default_gateway))
-    server.get_installed_win_updates(log_path, 'installed_win_updates.csv')
+    server.get_windows_update_status(log_path, 'installed_win_updates.csv')
     event_log_cfg = gc.windows_event_config
     server.get_event_log(event_log_cfg, log_path, 'windows_event_log.csv')
     server.get_summary(log_path, 'Summary.csv')

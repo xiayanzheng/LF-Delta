@@ -1,6 +1,5 @@
-from init.init_imports import Infra, Save, DaPr, Numbers, wmi_evt_qu
+from init.init_imports import Infra, Save, DaPr, Numbers, wmi_evt_qu, global_config, datetime
 from init.init_imports import psutil, socket, platform, wmi, subprocess, netifaces, show_status, winreg, os
-import re
 
 
 class Entry:
@@ -8,28 +7,6 @@ class Entry:
     def __init__(self):
         self.all_data = None
         self.wmi_connector = wmi.WMI()
-
-    @show_status
-    def get_installed_win_updates(self, log_path, log_file):
-        raw = Infra.cmd_con_lite("wmic qfe list")
-        # print(raw)
-        processed = []
-        for line in raw:
-            split_line = line.split('  ')
-            inner = []
-            for g in split_line:
-                if g != '':
-                    inner.append(g)
-            if len(inner) != 0:
-                processed.append(inner)
-        key = processed[0]
-        processed.pop(0)
-        result = []
-        for inner in processed:
-            merged = DaPr.convert_two_lists_to_dict(key, inner)
-            result.append(merged)
-        # print(result)
-        Save.toCSV(log_path, log_file, key, result)
 
     @show_status
     def get_basic_info(self, log_path, log_file, debug=False):
@@ -220,3 +197,39 @@ class Entry:
             installed.append(installed_temp)
         keys = list(installed[0].keys())
         Save.toCSV(log_path, log_file, keys, installed)
+
+    @show_status
+    def get_windows_update_status(self, log_path, log_file, debug=False):
+
+        def get_installed_win_updates(log_path_c, log_file_c, raw, debug_c):
+            all_data = []
+            for x in raw:
+                keys = list(x.properties.keys())
+                unit = {}
+                for key in keys:
+                    if hasattr(x, key):
+                        unit[key] = getattr(x, key)
+                all_data.append(unit)
+            n_key = list(all_data[0].keys())
+            if not debug_c:
+                Save.toCSV(log_path_c, log_file_c, n_key, all_data)
+            return all_data
+
+        def get_windows_date():
+            installed_on_flag = 'InstalledOn'
+            raw = self.wmi_connector.query("SELECT * from Win32_QuickFixEngineering")
+            windows_update_info = get_installed_win_updates(log_path, log_file, raw, debug)
+            last_update_install_time = None
+            for record in windows_update_info:
+                if installed_on_flag in record:
+                    installed_on_time = datetime.datetime.strptime(record[installed_on_flag], '%d/%m/%Y')
+                    if last_update_install_time is None:
+                        last_update_install_time = installed_on_time
+                    if installed_on_time > last_update_install_time:
+                        last_update_install_time = installed_on_time
+            diff = datetime.datetime.now() - last_update_install_time
+            out_date_day = global_config.windows_update_out_date_day
+            if not debug:
+                self.all_data['is_windows_update_outdated'] = diff.days > out_date_day
+
+        get_windows_date()

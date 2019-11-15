@@ -12,6 +12,7 @@ class GlobalConfig:
         self.func_name_dict = None
         self.version = None
         self.group = None
+        self.windows_update_out_date_day = 15
 
     def set_value(self):
         self.config_root = DaPr.find_path_backward(os.getcwd(), "config")
