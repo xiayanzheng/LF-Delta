@@ -55,7 +55,7 @@ def get_server_data(log_path):
     server.get_windows_update_status(log_path, 'installed_win_updates.csv')
     event_log_cfg = gc.windows_event_config
     server.get_event_log(event_log_cfg, log_path, 'windows_event_log.csv')
-    server.get_summary(log_path, 'Summary.csv')
+    server.get_summary(log_path, 'summary.csv')
 
 
 def set_path_and_select_group():
@@ -64,6 +64,7 @@ def set_path_and_select_group():
         os.mkdir(".\\Reports\\")
     group_name = select_group()
     log_folder = "{}_{}".format(group_name, datetime.datetime.now().strftime('%Y-%m-%d'))
+    gc.curr_log_folder = log_folder
     log_path = '.\\Reports\\{}\\{}'.format(log_folder, hostname)
     if not os.path.exists(log_path):
         os.makedirs(log_path)
@@ -94,3 +95,4 @@ def main():
 
 
 main()
+
