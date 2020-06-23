@@ -84,26 +84,27 @@ class DeviceCheck(CiscoNetwork):
         self.commands = None
         self.tasks = None
         self.groups = None
+        self.accounts = None
         self.logfile = None
 
     def flow(self):
         device_info = self.get_device_info()
         for device_name, cfg in device_info.items():
+            account = self.accounts[cfg["account"]]
             c_cfg = {
                 "device_name": device_name,
                 "ip": cfg['host'],
-                "username": cfg['username'],
-                "password": cfg['password'],
-                "enablepass": cfg['enablepass'],
+                "username": account['username'],
+                "password": account['password'],
+                "enablepass": account['enablepass'],
                 "tasks": cfg['device_tasks']
             }
             self.get_info(**c_cfg)
 
     def connect_device_i(self, **cfg):
-        print(cfg['ip'])
         try:
             device = self.connect_device(cfg['ip'], cfg['username'], cfg['password'], cfg['enablepass'])
-            cfg["hostname"] = device.get_hostname()
+            print(device.get_hostname())
             return device
         except (EOFError, NetMikoTimeoutException):
             print('Can not connect to Device')
@@ -120,6 +121,7 @@ class DeviceCheck(CiscoNetwork):
                 title = "{}[{}]{}".format(sp_line, self.commands[cmd], sp_line)
                 print(title)
                 self.logfile.write(title+"\n")
+                print(self.commands[cmd])
                 data = device.show(self.commands[cmd], True)
                 self.logfile.write(data)
         device.close()
@@ -131,6 +133,7 @@ class DeviceCheck(CiscoNetwork):
         self.commands = cfg["commands"]
         self.tasks = cfg["tasks"]
         self.groups = cfg["groups"]
+        self.accounts = cfg["accounts"]
         selected_group = self.select_group(self.groups)
         return selected_group
         # print(tasks)
@@ -172,6 +175,5 @@ class DeviceCheck(CiscoNetwork):
 
 
 if __name__ == '__main__':
-    print("[+] Start")
     dc = DeviceCheck()
     dc.flow()

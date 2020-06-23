@@ -5,9 +5,7 @@
           "desc": "CiscoOne",
           "host": "10.98.102.249",
           "port": 0,
-          "username": "root",
-          "password": "Hiamscs123",
-          "enablepass": "Hiamscs123",
+          "account":"001",
           "device_tasks": [
             "Check Cisco 3560 Status"
           ]
@@ -57,5 +55,12 @@
     "3560_show_version":"show version",
     "3560_show_interface_status": "show interface status err-disabled",
     "3560_show_ip_traffic": "show ip traffic"
+  },
+  "accounts": {
+    "001":{
+      "username": "root",
+      "password": "Hiamscs123",
+      "enablepass": "Hiamscs123"
+    }
   }
 }

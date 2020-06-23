@@ -79,25 +79,23 @@ def merge_reports(group_name):
 def main():
     # log_path, log_folder = set_path_and_select_group("SMBC")
     # get_server_data(log_path)
-
-
-    # group_name = select_group()
-    # msg = "input [1] for get server status\ninput [2] for merge report\ninput [3] for reselect："
-    # selected_function = int(input(msg))
-    # if selected_function in [1, 2]:
-    #     if selected_function == 1:
-    #         log_path, log_folder = set_path_and_select_group(group_name)
-    #         get_server_data(log_path)
-    #         Infra.open_dir(log_path)
-    #     elif selected_function == 2:
-    #         output_path, output_file = merge_reports(group_name)
-    #         Infra.open_dir(output_path)
-    #     elif selected_function == 3:
-    #         main()
-    #     os.system("pause")
-    # else:
-    #     print("invalid input")
-    #     main()
+    group_name = select_group()
+    msg = "input [1] for get server status\ninput [2] for merge report\ninput [3] for reselect："
+    selected_function = int(input(msg))
+    if selected_function in [1, 2]:
+        if selected_function == 1:
+            log_path, log_folder = set_path_and_select_group(group_name)
+            get_server_data(log_path)
+            Infra.open_dir(log_path)
+        elif selected_function == 2:
+            output_path, output_file = merge_reports(group_name)
+            Infra.open_dir(output_path)
+        elif selected_function == 3:
+            main()
+        os.system("pause")
+    else:
+        print("invalid input")
+        main()
 
 
 main()
