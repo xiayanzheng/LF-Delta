@@ -7,6 +7,9 @@ import getpass
 import re
 import io
 import os
+from lfcomlib.Jessica import DaPrCore as DaPr
+from lfcomlib.Jessica import Infra as Infra
+import prettytable
 
 
 # import StringIO
@@ -17,7 +20,7 @@ class CiscoNetwork(CiscoBaseConnection):
         self.password = password
         self.enablepass = enablepass
 
-    def CiscoDevice(self, iplist):
+    def cisco_device(self, iplist):
         self.device = {
             'device_type': 'cisco_ios',
             'username': self.username,
@@ -30,52 +33,44 @@ class CiscoNetwork(CiscoBaseConnection):
         self.connect = ConnectHandler(**self.device)
         self.connect.enable()
 
-    def gethostname(self):
+    def get_hostname(self):
         self.hostname = self.connect.find_prompt()
         self.hostname = self.hostname.replace("#", "")
         print(self.hostname)
 
-    '''     
-    def interfaceInfo(self,cmd):
+    def interface_info(self, cmd):
         result = self.connect.send_command(cmd)
         for interface in result.split('\n'):
             if 'up' in interface:
-                #print interface
-                lines=io.StringIO(interface)
+                # print interface
+                lines = io.StringIO(interface)
                 data = lines.read()
-                intername = ' '.join(re.findall('^Eth.+\/\d',data))
-                loopback  = ' '.join(re.findall('Loopback[0-9]',data))
-                interIP = re.findall( '\.'.join(['\d{1,3}']*4),data)
+                intername = ' '.join(re.findall('^Eth.+\/\d', data))
+                loopback = ' '.join(re.findall('Loopback[0-9]', data))
+                interIP = re.findall('\.'.join(['\d{1,3}'] * 4), data)
                 if intername:
-                    print(intername ,':', ''.join(interIP))
+                    print(intername, ':', ''.join(interIP))
                 else:
-                    print(loopback  , ':', ''.join(interIP))
-    '''
+                    print(loopback, ':', ''.join(interIP))
 
-    def show(self, cmd):
+    def show(self, cmd, data_clean):
         result = self.connect.send_command(cmd)
-        '''
-        lines = io.StringIO(result)
-        data = lines.read()
-        uptime = re.findall('uptime.+',data)
-        id = re.findall('\d{8}',data)
-        soft = re.findall('L3_.+\\.bin',data)
-        print('Device UPtime:', ''.join(uptime))
-        print('Device ID:', ''.join(id))
-        print('Soft Version:',''.join(soft))
-        '''
+        if data_clean:
+            result = self.data_clean(cmd, result)
+        return result
 
-        filepath = 'D:\\96. Other\\04. Development\\960401. python\\Python37\\AutomaticInspection\\log\\'
-        filename = 'log.txt'
-
-        if os.path.exists(filepath):
-            message = 'OK,the  "%s" dir exists.'
-        else:
-            message = "Now, I will create the %s"
-            os.makedirs(filepath)
-        save = open(filepath + filename, 'w')
-        save.write(result)
-        save.close()
+    def data_clean(self, data_type, data, ):
+        '''
+             lines = io.StringIO(result)
+             data = lines.read()
+             uptime = re.findall('uptime.+',data)
+             id = re.findall('\d{8}',data)
+             soft = re.findall('L3_.+\\.bin',data)
+             print('Device UPtime:', ''.join(uptime))
+             print('Device ID:', ''.join(id))
+             print('Soft Version:',''.join(soft))
+        '''
+        return data
 
     def close(self):
         if self.connect is not None:
@@ -83,18 +78,100 @@ class CiscoNetwork(CiscoBaseConnection):
             self.connect = None
 
 
-if __name__ == '__main__':
-    print("[+] This Program is beging done.......")
-    username = input('Username:')
-    password = getpass.getpass()
-    enablepass = input('enablepass:')
-    # for iplist in open("/opt/other/ip.txt"):'''
-    try:
-        switch = CiscoNetwork(username, password, enablepass)
-        switch.CiscoDevice('10.98.102.254')
-        switch.gethostname()
+class DeviceCheck(CiscoNetwork):
+
+    def __init__(self):
+        self.commands = None
+        self.tasks = None
+        self.groups = None
+        self.logfile = None
+
+    def flow(self):
+        device_info = self.get_device_info()
+        for device_name, cfg in device_info.items():
+            c_cfg = {
+                "device_name": device_name,
+                "ip": cfg['host'],
+                "username": cfg['username'],
+                "password": cfg['password'],
+                "enablepass": cfg['enablepass'],
+                "tasks": cfg['device_tasks']
+            }
+            self.get_info(**c_cfg)
+
+    def connect_device_i(self, **cfg):
+        print(cfg['ip'])
+        try:
+            device = self.connect_device(cfg['ip'], cfg['username'], cfg['password'], cfg['enablepass'])
+            cfg["hostname"] = device.get_hostname()
+            return device
+        except (EOFError, NetMikoTimeoutException):
+            print('Can not connect to Device')
+
+    def get_info(self, **cfg):
+        log_file_name = "{}_{}".format(cfg["device_name"], cfg["ip"])
+        self.open_log_file(log_file_name)
+        device = self.connect_device_i(**cfg)
         # switch.interfaceInfo('show ip int brief')
-        switch.show('show config')
-        switch.close()
-    except (EOFError, NetMikoTimeoutException):
-        print('Can not connect to Device')
+        task_list = cfg['tasks']
+        for task in task_list:
+            for cmd in self.tasks[task]['commands']:
+                sp_line = "-----------------------------"
+                title = "{}[{}]{}".format(sp_line, self.commands[cmd], sp_line)
+                print(title)
+                self.logfile.write(title+"\n")
+                data = device.show(self.commands[cmd], True)
+                self.logfile.write(data)
+        device.close()
+        self.close_log_file()
+
+    def get_device_info(self):
+        config_file = DaPr.Core.find_path_backward(os.getcwd(), 'config')
+        cfg = Infra.read_json(config_file, 'network_device_config.json')
+        self.commands = cfg["commands"]
+        self.tasks = cfg["tasks"]
+        self.groups = cfg["groups"]
+        selected_group = self.select_group(self.groups)
+        return selected_group
+        # print(tasks)
+        # print(cfg["groups"])
+
+    def select_group(self, groups):
+        group_list = []
+        for k, v in groups.items():
+            group_list.append(k)
+        pt = prettytable.PrettyTable()
+        pt.field_names = ["No", "Group"]
+        for i in range(len(group_list)):
+            no = i
+            group = group_list[i]
+            pt.add_row([no, group])
+        print(pt)
+        selected = int(input("pls select a group："))
+        return groups[group_list[selected]]
+
+    def connect_device(self, ip, username, password, enablepass):
+        device = CiscoNetwork(username, password, enablepass)
+        device.cisco_device(ip)
+        return device
+
+    def open_log_file(self, log_file_name):
+        filepath = os.path.join(os.getcwd(), 'log\\')
+        filename = "{}.txt".format(log_file_name)
+        if os.path.exists(filepath):
+            message = 'OK,the "{}" dir exists.'.format(filepath)
+            # print(message)
+        else:
+            message = "Now, I will create the {}".format(filepath)
+            # print(message)
+            os.makedirs(filepath)
+        self.logfile = open(filepath + filename, 'w')
+
+    def close_log_file(self):
+        self.logfile.close()
+
+
+if __name__ == '__main__':
+    print("[+] Start")
+    dc = DeviceCheck()
+    dc.flow()

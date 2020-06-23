@@ -1,81 +1,42 @@
 {
   "groups": {
     "groupOne": {
-      "devices": {
-        "Cisco": {
+      "Cisco": {
           "desc": "CiscoOne",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
+          "host": "10.98.102.249",
+          "port": 0,
+          "username": "root",
+          "password": "Hiamscs123",
+          "enablepass": "Hiamscs123",
           "device_tasks": [
-            "Get Cisco R1"
-          ]
-        },
-        "Cisco2": {
-          "desc": "CiscoTwo",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco R1"
-          ]
-        },
-        "Cisco3": {
-          "desc": "CiscoNeo",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco R1"
+            "Check Cisco 3560 Status"
           ]
         }
-      }
     },
     "groupTwo": {
-      "devices": {
-        "Cisco": {
+      "Cisco": {
           "desc": "CiscoOne",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
+          "host": "10.98.102.249",
+          "port": 0,
+          "username": "root",
+          "password": "Hiamscs123",
+          "enablepass": "Hiamscs123",
           "device_tasks": [
-            "Get Cisco Switch internet status"
-          ]
-        },
-        "Cisco2": {
-          "desc": "CiscoTwo",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco Switch internet status"
-          ]
-        },
-        "Cisco3": {
-          "desc": "CiscoNeo",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco Switch internet status"
+            "Check Cisco 3560 Status"
           ]
         }
-      }
     }
   },
   "tasks": {
-    "Get Cisco R1": {
+    "Check Cisco 3560 Status": {
       "commands": [
-        "R1_Login",
-        "show network status",
-        "input Space",
-        "exit session"
+        "3560_show_cpu",
+        "3560_show_mem",
+        "3560_show_fan_pwr_tem_status",
+        "3560_show_log",
+        "3560_show_version",
+        "3560_show_interface_status",
+        "3560_show_ip_traffic"
       ]
     },
     "Get Cisco Switch internet status": {
@@ -89,48 +50,12 @@
     }
   },
   "commands": {
-    "R1_Login": {
-      "execute_type": "direct",
-      "expect": "R1",
-      "response": "\\x07",
-      "timeout": 5,
-      "time_wait": 5
-    },
-    "input username": {
-      "execute_type": "direct",
-      "expect": "username:",
-      "response": "root\n",
-      "timeout": 5,
-      "time_wait": 0
-    },
-    "input password": {
-      "execute_type": "direct",
-      "expect": "password:",
-      "response": "Hiamscs123\n",
-      "timeout": 5,
-      "time_wait": 5
-    },
-    "show network status": {
-      "execute_type": "direct",
-      "expect": ["Switch","CHCS-CS-H01"],
-      "response": "show int statu\n",
-      "timeout": 5,
-      "time_wait": 1
-    },
-    "input Space": {
-      "execute_type": "loop",
-      "loop_time": 5,
-      "expect": "",
-      "response": " ",
-      "timeout": 5,
-      "time_wait": 1
-    },
-    "exit session": {
-      "execute_type": "direct",
-      "expect": "Switch>",
-      "response": "exit",
-      "timeout": 5,
-      "time_wait": 1
-    }
+    "3560_show_cpu":"show process cpu",
+    "3560_show_mem":"show mem summary",
+    "3560_show_fan_pwr_tem_status":"show env all",
+    "3560_show_log":"show logging",
+    "3560_show_version":"show version",
+    "3560_show_interface_status": "show interface status err-disabled",
+    "3560_show_ip_traffic": "show ip traffic"
   }
 }

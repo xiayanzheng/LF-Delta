@@ -1,8 +1,13 @@
 {
-  "version": "1.0.1",
-  "group": [
-    "HCMC",
-    "HSCN",
-    "HCCN"
-  ]
-}
+    "version": "1.0.1",
+    "group": ["HCMC", "HSCN", "HCCN"],
+    "mode":["auto","manual"],
+    "funcs":[
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"},
+        {"get_hardware_info":"True"}
+    ]

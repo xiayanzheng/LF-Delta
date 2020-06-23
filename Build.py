@@ -4,7 +4,7 @@ from init.init_imports import Infra
 builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
 root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
 tool_name = "infoCollector"
-params = "--onefile"
+params = ""
 target = "{}\\{}.py".format(root, tool_name)
 dis_dir = "{}\\dist\\".format(root)
 user_dist = "{}{}\\".format(dis_dir, tool_name)

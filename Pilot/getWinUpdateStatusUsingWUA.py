@@ -43,5 +43,7 @@ class WinUpdateInterface:
         # for inst in search_installed.Updates:
         #     ids = ['Type','DeploymentAction','BrowseOnly','AutoSelectOnWebSites','UpdateID']
         #     print(inst.__dict__)
+
+
 wu = WinUpdateInterface()
 wu.search()

@@ -1,0 +1,132 @@
+{
+  "groups": {
+    "groupOne": {
+      "Cisco": {
+          "desc": "CiscoOne",
+          "host": "192.168.229.128",
+          "port": 44293,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco R1"
+          ]
+        },
+      "Cisco2": {
+          "desc": "CiscoTwo",
+          "host": "192.168.229.128",
+          "port": 44293,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco R1"
+          ]
+        },
+      "Cisco3": {
+          "desc": "CiscoNeo",
+          "host": "192.168.229.128",
+          "port": 44293,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco R1"
+          ]
+        }
+    },
+    "groupTwo": {
+      "Cisco": {
+          "desc": "CiscoOne",
+          "host": "192.168.229.128",
+          "port": 42881,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco Switch internet status"
+          ]
+        },
+      "Cisco2": {
+          "desc": "CiscoTwo",
+          "host": "192.168.229.128",
+          "port": 42881,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco Switch internet status"
+          ]
+        },
+      "Cisco3": {
+          "desc": "CiscoNeo",
+          "host": "192.168.229.128",
+          "port": 42881,
+          "username": "",
+          "password": "",
+          "device_tasks": [
+            "Get Cisco Switch internet status"
+          ]
+        }
+    }
+  },
+  "tasks": {
+    "Get Cisco R1": {
+      "commands": [
+        "R1_Login",
+        "show network status",
+        "input Space",
+        "exit session"
+      ]
+    },
+    "Get Cisco Switch internet status": {
+      "commands": [
+        "input username",
+        "input password",
+        "show network status",
+        "input Space",
+        "exit session"
+      ]
+    }
+  },
+  "commands": {
+    "R1_Login": {
+      "execute_type": "direct",
+      "expect": "R1",
+      "response": "\\x07",
+      "timeout": 5,
+      "time_wait": 5
+    },
+    "input username": {
+      "execute_type": "direct",
+      "expect": "username:",
+      "response": "root\n",
+      "timeout": 5,
+      "time_wait": 0
+    },
+    "input password": {
+      "execute_type": "direct",
+      "expect": "password:",
+      "response": "Hiamscs123\n",
+      "timeout": 5,
+      "time_wait": 5
+    },
+    "show network status": {
+      "execute_type": "direct",
+      "expect": ["Switch","CHCS-CS-H01"],
+      "response": "show int statu\n",
+      "timeout": 5,
+      "time_wait": 1
+    },
+    "input Space": {
+      "execute_type": "loop",
+      "loop_time": 5,
+      "expect": "",
+      "response": " ",
+      "timeout": 5,
+      "time_wait": 1
+    },
+    "exit session": {
+      "execute_type": "direct",
+      "expect": "Switch>",
+      "response": "exit",
+      "timeout": 5,
+      "time_wait": 1
+    }
+  }
+}

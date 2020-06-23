@@ -29,7 +29,7 @@ def init_path(group_name):
         init_path(group_name)
 
 
-def merge(group_name,show_msg=False):
+def merge(group_name, show_msg=False):
     # Load Report
     report_root, report_objs, report_objs_dev, report_objs_dev_objs = init_path(group_name)
     dfs = []
@@ -41,11 +41,11 @@ def merge(group_name,show_msg=False):
         for obj in os.listdir(report_objs_dev_sub):
             if show_msg:
                 print(obj)
-            if os.path.splitext(obj)[-1] == '.csv' and 'Summary' in obj:
+            if os.path.splitext(obj)[-1] == '.csv' and 'summary' in obj:
                 csv_file = os.path.join(report_objs_dev_sub, obj)
                 if show_msg:
                     print(csv_file)
-                csv_data = read_csv(csv_file)
+                csv_data = read_csv(csv_file, encoding='gb18030')
                 csv_data.set_index('item', inplace=True)
                 dfs.append(csv_data)
     if len(dfs) != 0:
@@ -58,5 +58,3 @@ def merge(group_name,show_msg=False):
     else:
         print("No Data")
     return report_root, output_file
-
-

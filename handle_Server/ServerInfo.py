@@ -50,26 +50,9 @@ class Entry:
             if not debug:
                 Save.toCSV(log_path, log_file, header, data)
             self.all_data = info
-
-        def get_kav_update_status():
-            kav_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\KasperskyLab\Binaries\KES_X86")
-            avp_com = "avp.com"
-            kav_install_path, _ = winreg.QueryValueEx(kav_key, avp_com)
-            kav_install_path = kav_install_path[0:len(kav_install_path) - len(avp_com)]
-            curr_dir = os.getcwd()
-            os.chdir(kav_install_path)
-            kav_version_query = "{} {} {}".format(avp_com, "STATISTICS", "Updater")
-            raw = Infra.cmd_con_lite(kav_version_query)
-            os.chdir(curr_dir)
-            valid = ["Start", "Finish"]
-            for line in raw:
-                for i in range(len(valid)):
-                    key = valid[i]
-                    if key in line:
-                        self.all_data["kav_update_{}_time".format(key).lower()] = DaPr.match_datetime_from_str(line)
-
         get_hardware_info()
-        get_kav_update_status()
+
+   
 
     @show_status
     def get_disk_partitions(self, log_path, log_file):
@@ -222,7 +205,7 @@ class Entry:
             last_update_install_time = None
             for record in windows_update_info:
                 if installed_on_flag in record:
-                    installed_on_time = datetime.datetime.strptime(record[installed_on_flag], '%d/%m/%Y')
+                    installed_on_time = datetime.datetime.strptime(record[installed_on_flag], '%m/%d/%Y')
                     if last_update_install_time is None:
                         last_update_install_time = installed_on_time
                     if installed_on_time > last_update_install_time:
@@ -233,3 +216,24 @@ class Entry:
                 self.all_data['is_windows_update_outdated'] = diff.days > out_date_day
 
         get_windows_date()
+
+    @show_status
+    def get_kav_update_status(self):
+        try:
+            kav_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\KasperskyLab\Binaries\KES_X86")
+            avp_com = "avp.com"
+            kav_install_path, _ = winreg.QueryValueEx(kav_key, avp_com)
+            kav_install_path = kav_install_path[0:len(kav_install_path) - len(avp_com)]
+            curr_dir = os.getcwd()
+            os.chdir(kav_install_path)
+            kav_version_query = "{} {} {}".format(avp_com, "STATISTICS", "Updater")
+            raw = Infra.cmd_con_lite(kav_version_query)
+            os.chdir(curr_dir)
+            valid = ["Start", "Finish"]
+            for line in raw:
+                for i in range(len(valid)):
+                    key = valid[i]
+                    if key in line:
+                        self.all_data["kav_update_{}_time".format(key).lower()] = DaPr.match_datetime_from_str(line)
+        except FileNotFoundError:
+            pass
