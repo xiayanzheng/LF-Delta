@@ -1,0 +1,36 @@
+Processor Pool Total:  413407844 Used:   50278404 Free:  363129440
+      I/O Pool Total:   33554432 Used:   12465836 Free:   21088596
+Driver te Pool Total:    1048576 Used:      95252 Free:     953324
+
+ PID TTY  Allocated      Freed    Holding    Getbufs    Retbufs Process
+   0   0   84306596   27895960   52502648          0          0 *Init*          
+   0   0      12180     801552      12180          0          0 *Sched*         
+   0   0   35390344   33482588    1664524   12378583     949166 *Dead*          
+   0   0          0          0     394844          0          0 *MallocLite*    
+   1   0     317860      49752     275276          0          0 Chunk Manager   
+   2   0        232        232       4168          0          0 Load Meter      
+   3   0     476696     324264       7644          0          0 SpanTree Helper 
+   4   0          0          0       7168          0          0 Retransmission o
+   5   0          0          0       7168          0          0 IPC ISSU Dispatc
+   6   0       4712        232      11700          0          0 Check heaps     
+   7   0   51853664   52159592      33056   46790080   46931623 Pool Manager    
+   8   0          0          0       7168          0          0 DiscardQ Backgro
+   9   0        232        232       7168          0          0 Timers          
+  10   0          0          0       4168          0          0 WATCH_AFS       
+  11   0          0          0       7168          0          0 HUSB Console    
+  12   0          0          0       7168          0          0 License Client N
+  13   0 1327448340 1327448340       7176          0          0 Licensing Auto U
+  14   0          0          0       7168          0          0 Image License br
+  15   0    1890824    1854124      43868          0          0 ARP Input       
+  16   0      17268      17268       7232          0          0 ARP Background  
+  17   0          0          0       7168          0          0 AAA_SERVER_DEADT
+  18   0          0          0      13168          0          0 Policy Manager  
+  19   0      27680       6440      28508          0          0 Entity MIB API  
+  20   0          0          0       7168          0          0 IFS Agent Manage
+  21   0          0          0       7168          0          0 IPC Event Notifi
+  22   0          0          0       7168          0          0 IPC Mcast Pendin
+  23   0          0          0       7168          0          0 IPC Dynamic Cach
+  24   0          0          0       7168          0          0 IPC Session Serv
+  25   0          0          0       7168          0          0 IPC Zone Manager
+  26   0          0          0       7168          0          0 IPC Periodic Tim
+  27   0          0          0       7168          0          0 IPC Deferred Por

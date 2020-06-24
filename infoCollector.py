@@ -1,6 +1,6 @@
 from init.init_imports import Infra, os, socket, datetime, prettytable
 from init.init_imports import global_config as gc
-from handle_Server import server
+from handle_server import server
 from handle_report import mergeReports
 
 

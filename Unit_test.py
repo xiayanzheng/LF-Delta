@@ -1,3 +1,3 @@
-from handle_Server import server
+from handle_server import server
 
 server.get_windows_update_status('', '', True)

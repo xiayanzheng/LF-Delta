@@ -1,0 +1,41 @@
+IP statistics:
+  Rcvd:  244131 total, 201111 local destination
+         0 format errors, 0 checksum errors, 0 bad hop count
+         0 unknown protocol, 43020 not a gateway
+         0 security failures, 0 bad options, 3758 with options
+  Opts:  0 end, 0 nop, 0 basic security, 0 loose source route
+         0 timestamp, 0 extended security, 0 record route
+         0 stream ID, 0 strict source route, 3758 alert, 0 cipso, 0 ump
+         0 other
+  Frags: 0 reassembled, 0 timeouts, 0 couldn't reassemble
+         0 fragmented, 0 couldn't fragment
+         0 invalid hole
+  Bcast: 3310 received, 0 sent
+  Mcast: 0 received, 0 sent
+  Sent:  205464 generated, 0 forwarded
+  Drop:  12 encapsulation failed, 0 unresolved, 0 no adjacency
+         0 no route, 0 unicast RPF, 0 forced drop
+         0 options denied, 0 source IP address zero
+
+ICMP statistics:
+  Rcvd: 0 format errors, 0 checksum errors, 0 redirects, 0 unreachable
+        10 echo, 0 echo reply, 0 mask requests, 0 mask replies, 0 quench
+        0 parameter, 0 timestamp, 0 info request, 0 other
+        0 irdp solicitations, 0 irdp advertisements
+  Sent: 0 redirects, 2 unreachable, 0 echo, 10 echo reply
+        0 mask requests, 0 mask replies, 0 quench, 0 timestamp
+        0 info reply, 0 time exceeded, 0 parameter problem
+        0 irdp solicitations, 0 irdp advertisements
+
+TCP statistics:
+  Rcvd: 4684 total, 0 checksum errors, 23 no port
+  Sent: 12210 total
+
+UDP statistics:
+  Rcvd: 196417 total, 0 checksum errors, 3308 no port 0 finput
+  Sent: 193242 total, 0 forwarded broadcasts
+
+ARP statistics:
+  Rcvd: 2748790 requests, 754 replies, 0 reverse, 0 other
+  Sent: 713 requests, 658 replies (0 proxy), 0 reverse
+  Drop due to input queue full: 0

@@ -12,14 +12,26 @@ import os
 
 
 class Connection(CiscoBaseConnection):
-    def __init__(self, username, password, enablepass):
+    def __init__(self, username, password, enablepass,device_type):
         self.username = username
         self.password = password
         self.enablepass = enablepass
+        self.device_type = device_type
+        self.hostname = None
+
+    def connect_device(self, **cfg):
+        ip = cfg['ip']
+        username = cfg['username']
+        password = cfg['password']
+        enable_pass = cfg['enablepass']
+        device_type = cfg['device_type']
+        device = Connection(username, password, enable_pass, device_type)
+        device.cisco_device(ip)
+        return device
 
     def cisco_device(self, iplist):
         self.device = {
-            'device_type': 'cisco_ios',
+            'device_type': self.device_type,
             'username': self.username,
             'password': self.password,
             'ip': iplist,
@@ -33,7 +45,7 @@ class Connection(CiscoBaseConnection):
     def get_hostname(self):
         self.hostname = self.connect.find_prompt()
         self.hostname = self.hostname.replace("#", "")
-        print(self.hostname)
+        return self.hostname
 
     def interface_info(self, cmd):
         result = self.connect.send_command(cmd)
