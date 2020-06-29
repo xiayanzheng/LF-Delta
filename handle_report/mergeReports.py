@@ -1,9 +1,9 @@
-from init.init_imports import os, DaPr, prettytable, read_csv
+from init.init_imports import os, DaPrX, prettytable, read_csv
 from init.init_imports import global_config as gc
 
 
 def init_path(group_name):
-    report_root = DaPr.find_path_backward(os.getcwd(), 'Reports')
+    report_root = DaPrX.find_path_backward(os.getcwd(), 'Reports')
     report_objs = os.listdir(report_root)
     pt = prettytable.PrettyTable()
     pt.field_names = ['No', 'Report Name']
@@ -46,6 +46,7 @@ def merge(group_name, show_msg=False):
                 if show_msg:
                     print(csv_file)
                 csv_data = read_csv(csv_file, encoding='gb18030')
+                print(csv_data)
                 csv_data.set_index('item', inplace=True)
                 dfs.append(csv_data)
     if len(dfs) != 0:
@@ -58,3 +59,27 @@ def merge(group_name, show_msg=False):
     else:
         print("No Data")
     return report_root, output_file
+
+
+def merge_dirct(report_folder,show_msg=False):
+    dfs = []
+    output_file = os.path.join(report_folder,os.path.split(report_folder)[-1] + '_merged_report.xlsx')
+    for obj in os.listdir(report_folder):
+        print(obj)
+        if show_msg:
+            print(obj)
+        if os.path.splitext(obj)[-1] == '.csv' in obj:
+            csv_file = os.path.join(report_folder, obj)
+            if show_msg:
+                print(csv_file)
+            csv_data = read_csv(csv_file, encoding='gb18030')
+            print(csv_data)
+            csv_data.set_index('item', inplace=True)
+            dfs.append(csv_data)
+    if len(dfs) != 0:
+        final = dfs[0]
+        for df in dfs[1:]:
+            final = final.join(df, how='outer', lsuffix='item')
+        final.to_excel(output_file, engine='xlsxwriter')
+    else:
+        print("No Data")

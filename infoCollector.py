@@ -1,4 +1,4 @@
-from init.init_imports import Infra, os, socket, datetime, prettytable
+from init.init_imports import InfraX, os, socket, datetime, prettytable
 from init.init_imports import global_config as gc
 from handle_server import server
 from handle_report import mergeReports
@@ -17,7 +17,7 @@ def add_group():
         select_group()
     new_group_list.append(new_group_name)
     gc.app_config['group'] = new_group_list
-    Infra.write_json(gc.config_root, gc.app_config_file_name, gc.app_config)
+    InfraX.write_json(gc.config_root, gc.app_config_file_name, gc.app_config)
     gc.group = gc.app_config['group']
     select_group()
 
@@ -86,10 +86,10 @@ def main():
         if selected_function == 1:
             log_path, log_folder = set_path_and_select_group(group_name)
             get_server_data(log_path)
-            Infra.open_dir(log_path)
+            InfraX.open_dir(log_path)
         elif selected_function == 2:
             output_path, output_file = merge_reports(group_name)
-            Infra.open_dir(output_path)
+            InfraX.open_dir(output_path)
         elif selected_function == 3:
             main()
         os.system("pause")
