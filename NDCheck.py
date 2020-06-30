@@ -1,4 +1,5 @@
-from handle_Network_Devices.interface.flow import DeviceCheck
+from handle_Network_Devices.interface.flow import Interface
+import asyncio
 
-dc = DeviceCheck()
+dc = Interface()
 dc.flow()

@@ -1,5 +1,5 @@
 import wx
-from handle_Network_Devices.interface.flow import DeviceCheck
+from handle_Network_Devices.interface.pipline import DeviceCheck
 
 class ButtonFrame(wx.Frame):
     def __init__(self):
