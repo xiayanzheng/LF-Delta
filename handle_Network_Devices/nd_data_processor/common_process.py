@@ -1,5 +1,7 @@
 import re
-from init.init_imports import DaPrX
+from lfcomlib.Jessica import DaPr
+
+DaPr = DaPr.Core()
 
 
 class CommonDataProcess():
@@ -16,7 +18,7 @@ class CommonDataProcess():
 
     def findall_multiline_data(self, *args):
         regex_rule, data = args[0], args[1]
-        single_line_data = DaPrX.convert_multiline_to_single_line(data, " ", "")
+        single_line_data = DaPr.convert_multiline_to_single_line(data, " ", "")
         return self.findall_single_line_data(regex_rule, single_line_data)
 
     def bypass(self,*args):

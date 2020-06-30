@@ -42,48 +42,63 @@ commands:
   3560_show_cpu:
     cmd: show process cpu
     rule: ru1
+    save_to: csv
   3560_show_mem:
     cmd: show mem summary
     rule: ru9
+    save_to: csv
   3560_show_proc_mem:
     cmd: show processes memory
     rule: ru9
+    save_to: csv
   3560_show_fan_status:
     cmd: show env all
     rule: ru2
+    save_to: csv
   3560_show_tmp_val:
     cmd: show env all
     rule: ru3
+    save_to: csv
   3560_show_tmp_is:
     cmd: show env all
     rule: ru4
+    save_to: csv
   3560_show_tmp_status:
     cmd: show env all
     rule: ru5
+    save_to: csv
   3560_show_log:
     cmd: show logging
-    rule: ru7
+    rule: transparent
+    save_to: txt
   3560_show_version:
     cmd: show version
     rule: ru8
+    save_to: csv
   3560_show_interface_status:
     cmd: show interface status err-disabled
     rule: transparent
+    save_to: csv
   3560_show_ip_traffic:
     cmd: show ip traffic
     rule: ru10
+    save_to: csv
   ac_show_memory_summary:
     cmd: show memory summary
     rule: ru12
+    save_to: csv
   ac_show_sys_info:
     cmd: show sysinfo
     rule: ru13
+    save_to: csv
   ac_show_ap_summary:
     cmd: show ap summary
     rule: transparent
+    save_to: csv
   sw_3_show_switch:
     cmd: show switch
     rule: transparent
+    save_to: csv
 regx_rules:
   transparent:
     rule: None

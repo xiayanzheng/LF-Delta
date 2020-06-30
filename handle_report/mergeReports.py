@@ -1,9 +1,12 @@
-from init.init_imports import os, DaPrX, prettytable, read_csv
-from init.init_imports import global_config as gc
+import os, prettytable
+from pandas import read_csv
+from lfcomlib.Jessica import DaPr
+
+DaPr = DaPr.Core()
 
 
 def init_path(group_name):
-    report_root = DaPrX.find_path_backward(os.getcwd(), 'Reports')
+    report_root = DaPr.find_path_backward(os.getcwd(), 'Reports')
     report_objs = os.listdir(report_root)
     pt = prettytable.PrettyTable()
     pt.field_names = ['No', 'Report Name']
@@ -31,41 +34,21 @@ def init_path(group_name):
 
 def merge(group_name, show_msg=False):
     # Load Report
-    report_root, report_objs, report_objs_dev, report_objs_dev_objs = init_path(group_name)
-    dfs = []
+    report_folder, report_objs, report_objs_dev, report_objs_dev_objs = init_path(group_name)
     output_file = report_objs_dev + '_merged_report.xlsx'
-    for folder in report_objs_dev_objs:
-        report_objs_dev_sub = os.path.join(report_objs_dev, folder)
-        if show_msg:
-            print("report_objs_dev_sub", report_objs_dev_sub)
-        for obj in os.listdir(report_objs_dev_sub):
-            if show_msg:
-                print(obj)
-            if os.path.splitext(obj)[-1] == '.csv' and 'summary' in obj:
-                csv_file = os.path.join(report_objs_dev_sub, obj)
-                if show_msg:
-                    print(csv_file)
-                csv_data = read_csv(csv_file, encoding='gb18030')
-                print(csv_data)
-                csv_data.set_index('item', inplace=True)
-                dfs.append(csv_data)
-    if len(dfs) != 0:
-        final = dfs[0]
-
-        for df in dfs[1:]:
-            temp = final.join(df, how='outer', lsuffix='item')
-            final = temp
-        final.to_excel(output_file, engine='xlsxwriter')
-    else:
-        print("No Data")
-    return report_root, output_file
+    dfs = load_data(report_folder, show_msg)
+    merge_data(dfs, output_file)
+    return report_folder, output_file
 
 
-def merge_dirct(report_folder,show_msg=False):
+def merge_direct(report_folder, output_file, show_msg=False):
+    dfs = load_data(report_folder, show_msg)
+    merge_data(dfs, output_file)
+
+
+def load_data(report_folder, show_msg=False):
     dfs = []
-    output_file = os.path.join(report_folder,os.path.split(report_folder)[-1] + '_merged_report.xlsx')
     for obj in os.listdir(report_folder):
-        print(obj)
         if show_msg:
             print(obj)
         if os.path.splitext(obj)[-1] == '.csv' in obj:
@@ -73,13 +56,18 @@ def merge_dirct(report_folder,show_msg=False):
             if show_msg:
                 print(csv_file)
             csv_data = read_csv(csv_file, encoding='gb18030')
-            print(csv_data)
+            if show_msg:
+                print(csv_data)
             csv_data.set_index('item', inplace=True)
             dfs.append(csv_data)
+    return dfs
+
+
+def merge_data(dfs, output_file):
     if len(dfs) != 0:
         final = dfs[0]
         for df in dfs[1:]:
             final = final.join(df, how='outer', lsuffix='item')
-        final.to_excel(output_file, engine='xlsxwriter')
+        final.T.to_excel(output_file, engine='xlsxwriter')
     else:
-        print("No Data")
+        print("[!]No Data")

@@ -13,7 +13,7 @@ class DataCleaner(CommonDataProcess):
                 for method in methods:
                     r_data = getattr(self, method)(regx, data)
             return r_data
-        finally:
-            print("[Error]-[Fail to exec regx rule,return raw data]")
-            print(data)
+        except:
+            print("[!][{}]Fail to exec regx rule,return raw data".format(cmd))
+            # print(data)
             return data

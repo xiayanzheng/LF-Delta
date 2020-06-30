@@ -37,7 +37,6 @@ class Connection(CiscoBaseConnection):
             'ip': iplist,
             'secret': self.enablepass
         }
-        print('-' * 100)
         print("[+]connect to network device... %s" % iplist)
         self.connect = ConnectHandler(**self.device)
         self.connect.enable()
