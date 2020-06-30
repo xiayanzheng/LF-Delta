@@ -7,6 +7,13 @@ groups:
       account: 001
       device_type: cisco_ios
       tasks: [Check Cisco 3560 Status]
+    CiscoSW2:
+      desc: CiscoACXS
+      host: 10.98.102.243
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Check Cisco 3560 Status]
   groupTwo:
     CiscoAC:
       desc: CiscoAC

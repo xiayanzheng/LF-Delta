@@ -1,17 +1,17 @@
 from netmiko import ConnectHandler
 from netmiko.ssh_exception import NetMikoTimeoutException
 from netmiko.cisco_base_connection import CiscoBaseConnection
-import time
-import sys
-import getpass
 import re
 import io
-import os
+import asyncio
+import netdev
+
 
 # import StringIO
 
 
 class Connection(CiscoBaseConnection):
+    
     def __init__(self, username, password, enablepass,device_type):
         self.username = username
         self.password = password
