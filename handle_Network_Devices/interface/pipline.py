@@ -58,7 +58,7 @@ class DeviceCheck(Connection):
         data = DaPr.insert_value_to_list_and_merge(data, '-')
         return cmd_cfg, data
 
-    def export_data_to_txt(self,log_file_path,cmd_cfg,data):
+    def export_data_to_txt(self, log_file_path, cmd_cfg, data):
         try:
             filename = "{}.txt".format(cmd_cfg['cmd'])
             logfile = Infra.open_file_conn(log_file_path, filename)
@@ -89,11 +89,11 @@ class DeviceCheck(Connection):
             for cmd in self.tasks[task]['commands']:
                 cmd_cfg, data = self.command_executor(device, cmd)
                 if cmd_cfg['save_to'] in ['csv', 'CSV']:
-                    dpkg = {self.result_head[0]: cmd_cfg['cmd'],self.result_head[1]: data}
-                    self.result_data_temp_store.append(dpkg)
+                    d_pkg = {self.result_head[0]: cmd_cfg['cmd'], self.result_head[1]: data}
+                    self.result_data_temp_store.append(d_pkg)
                 elif cmd_cfg['save_to'] in ['txt', 'TXT']:
                     date = Format.CurrentTime.YYYYMMDD
-                    log_file_path = os.path.join(self.report_folder_path,"{}_{}".format(self.string_host_ip,date))
+                    log_file_path = os.path.join(self.report_folder_path, "{}_{}".format(self.string_host_ip, date))
                     Infra.handle_folder_file_path(log_file_path)
                     print("[+]Writing data to txt")
                     self.export_data_to_txt(log_file_path, cmd_cfg, data)
@@ -103,8 +103,3 @@ class DeviceCheck(Connection):
         print("[+]Data ready")
         self.export_data_to_csv()
         # Infra.close_file_conn(self.logfile)
-
-
-if __name__ == '__main__':
-    dc = DeviceCheck()
-    dc.flow()
