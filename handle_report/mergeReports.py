@@ -68,6 +68,6 @@ def merge_data(dfs, output_file):
         final = dfs[0]
         for df in dfs[1:]:
             final = final.join(df, how='outer', lsuffix='item')
-        final.T.to_excel(output_file, engine='xlsxwriter')
+        final.to_excel(output_file, engine='xlsxwriter')
     else:
         print("[!]No Data")

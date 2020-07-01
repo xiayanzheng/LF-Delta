@@ -29,6 +29,7 @@ class Connection(CiscoBaseConnection):
         device.cisco_device(ip)
         return device
 
+
     def cisco_device(self, iplist):
         self.device = {
             'device_type': self.device_type,

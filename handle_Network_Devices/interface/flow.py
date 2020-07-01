@@ -8,6 +8,7 @@ import asyncio
 import time
 from handle_Network_Devices.interface.pipline import DeviceCheck
 
+
 Infra = Infra.Core()
 DaPr = DaPr.Core()
 dc = DeviceCheck()
@@ -32,8 +33,11 @@ class Interface:
         loop.run_until_complete(asyncio.wait(tasks))
         loop.close()
         file_ext = '_merged_report.xlsx'
-        output_file = os.path.join(dc.report_folder_path, os.path.split(dc.report_folder_path)[-1] + file_ext)
-        mergeReports.merge_direct(dc.report_folder_path, output_file)
+        try:
+            output_file = os.path.join(dc.report_folder_path, os.path.split(dc.report_folder_path)[-1] + file_ext)
+            mergeReports.merge_direct(dc.report_folder_path, output_file)
+        except:
+            print("[!]Error")
         end = time.time()
         input("[+]Done.Total process time used: {} seconds".format(int(end-start)))
 
@@ -47,7 +51,10 @@ class Interface:
         cfg["username"] = account['username']
         cfg["password"] = account['password']
         cfg["enablepass"] = account['enablepass']
-        dc.get_info(**cfg)
+        try:
+            dc.get_info(**cfg)
+        except:
+            pass
 
     def show_progress(self):
         total = self.total_task_num

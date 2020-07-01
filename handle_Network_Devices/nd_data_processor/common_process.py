@@ -4,7 +4,7 @@ from lfcomlib.Jessica import DaPr
 DaPr = DaPr.Core()
 
 
-class CommonDataProcess():
+class CommonDataProcess:
 
     def findall_single_line_data(self,*args):
         regex_rule, data = args[0],args[1]

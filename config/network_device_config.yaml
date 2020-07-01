@@ -1,97 +1,208 @@
 groups:
-  groupOne:
-    CiscoSW:
-      desc: CiscoACXS
+  GWAN:
+    AMS_GWAN_SW_1:
+      desc: CHCS2-MS-H01
       host: 10.98.102.243
       port: 0
       account: 001
       device_type: cisco_ios
-      tasks: [Check Cisco 3560 Status]
-  groupTwo:
-    CiscoAC:
-      desc: CiscoAC
+      tasks: [Cisco_3850_New]
+    AMS_GWAN_SW_2:
+      desc: CHCS2-SS-H01
+      host: 10.98.102.242
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_3:
+      desc: CHCS2-SS-H01
+      host: 10.98.102.241
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_4:
+      desc: CHCS2-ES-H02
+      host: 10.98.102.240
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X_stack]
+    AMS_GWAN_SW_5:
+      desc: CHCS2-ES-H03
+      host: 10.98.102.239
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_6:
+      desc: CHCS2-ES-H04
+      host: 10.98.102.238
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_7:
+      desc: CHCS2-ES-H06
+      host: 10.98.102.236
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_8:
+      desc: CHCS2-ES-H07
+      host: 10.98.102.235
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_AC_1:
+      desc: CHCS2-WC-H01
       host: 10.98.102.245
       port: 0
       account: 001
       device_type: cisco_wlc_ssh
-      tasks: [Check Cisco AC]
+      tasks: [Cisco_AC_AP]
+    AMS_GWAN_AC_2:
+      desc: CHCS2-WC-H02
+      host: 10.98.102.244
+      port: 0
+      account: 001
+      device_type: cisco_wlc_ssh
+      tasks: [Cisco_AC_AP]
+  Test:
+    AMS_GWAN_SW_8:
+      desc: CHCS2-ES-H07
+      host: 10.98.102.235
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_AC_1:
+      desc: CHCS2-WC-H01
+      host: 10.98.102.245
+      port: 0
+      account: 001
+      device_type: cisco_wlc_ssh
+      tasks: [Cisco_AC_AP]
 tasks:
-  Check Status:
-    commands: [3560_show_log,
-               sw_3_show_switch]
-  Check Cisco 3560 Status:
-    commands: [3560_show_cpu,
-               3560_show_proc_mem,
-               3560_show_fan_status,
-               3560_show_log,
-               3560_show_version,
-               3560_show_interface_status,
-               3560_show_ip_traffic]
-  Check Cisco AC:
-    commands: [ac_show_memory_summary,
-               ac_show_sys_info,
-               ac_show_ap_summary]
+  Cisco_3850_New:
+    commands:
+      [
+        u_show_process_cpu,
+        u_show_process_memory,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        u_show_env_all_tempature,
+        u_show_logging,
+        u_show_ip_traffic,
+        u_show_interface_status_err_disabled,
+        u_show_version,
+        u_show_switch,
+      ]
+  Cisco_2960X:
+    commands:
+      [
+        u_show_process_cpu,
+        u_show_process_memory,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        u_show_env_all_tempature,
+        u_show_logging,
+        u_show_version,
+        u_show_interface_status_err_disabled,
+        u_show_ip_traffic,
+      ]
+  Cisco_2960X_stack:
+    commands:
+      [
+        u_show_process_cpu,
+        u_show_process_memory,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        u_show_env_all_tempature,
+        u_show_logging,
+        u_show_switch,
+        u_show_version,
+        u_show_interface_status_err_disabled,
+        u_show_ip_traffic,
+      ]
+  Cisco_AC_AP:
+    commands:
+      [
+        u_ac_show_ap_led_state_all,
+        u_ac_show_ap_uptime,
+        u_ac_show_cpu,
+        u_ac_show_memory_statistics,
+        u_ac_show_stats_switch_summary,
+        u_ac_show_sysinfo,
+        u_show_logging,
+      ]
 commands:
-  3560_show_cpu:
+  u_show_process_cpu:
     cmd: show process cpu
     rule: ru1
     save_to: csv
-  3560_show_mem:
-    cmd: show mem summary
-    rule: ru9
-    save_to: csv
-  3560_show_proc_mem:
+  u_show_process_memory:
     cmd: show processes memory
     rule: ru14
     save_to: csv
-  3560_show_fan_status:
+  u_show_env_all_fan:
     cmd: show env all
     rule: ru2
     save_to: csv
-  3560_show_tmp_val:
+  u_show_env_all_power_supply:
+    cmd: show env all
+    rule: ru2
+    save_to: csv
+  u_show_env_all_tempature:
     cmd: show env all
     rule: ru3
     save_to: csv
-  3560_show_tmp_is:
-    cmd: show env all
-    rule: ru4
-    save_to: csv
-  3560_show_tmp_status:
-    cmd: show env all
-    rule: ru5
-    save_to: csv
-  3560_show_log:
+  u_show_logging:
     cmd: show logging
     rule: transparent
     save_to: txt
-  3560_show_version:
-    cmd: show version
-    rule: ru8
-    save_to: csv
-  3560_show_interface_status:
+  u_show_ip_traffic:
+    cmd: show ip traffic
+    rule: ru10
+    save_to: txt
+  u_show_interface_status_err_disabled:
     cmd: show interface status err-disabled
     rule: transparent
     save_to: csv
-  3560_show_ip_traffic:
-    cmd: show ip traffic
-    rule: ru10
+  u_show_version:
+    cmd: show version
+    rule: ru8
     save_to: csv
-  ac_show_memory_summary:
-    cmd: show memory summary
-    rule: ru12
-    save_to: csv
-  ac_show_sys_info:
-    cmd: show sysinfo
-    rule: ru13
-    save_to: csv
-  ac_show_ap_summary:
-    cmd: show ap summary
-    rule: transparent
-    save_to: csv
-  sw_3_show_switch:
+  u_show_switch:
     cmd: show switch
     rule: transparent
     save_to: csv
+  u_ac_show_cpu:
+    cmd: show cpu
+    rule: transparent
+    save_to: txt
+  u_ac_show_memory_statistics:
+    cmd: show memory statistics
+    rule: transparent
+    save_to: txt
+  u_ac_show_sysinfo:
+    cmd: show sysinfo
+    rule: transparent
+    save_to: txt
+  u_ac_show_stats_switch_summary:
+    cmd: show stats switch summary
+    rule: transparent
+    save_to: txt
+  u_ac_show_ap_led_state_all:
+    cmd: show ap led-state all
+    rule: transparent
+    save_to: txt
+  u_ac_show_ap_uptime:
+    cmd: show ap uptime
+    rule: transparent
+    save_to: txt
 regx_rules:
   transparent:
     rule: None

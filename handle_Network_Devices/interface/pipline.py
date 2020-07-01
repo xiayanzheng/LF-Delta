@@ -6,6 +6,7 @@ from lfcomlib.Jessica import Format
 from lfcomlib.Jessica import Save
 from handle_Network_Devices.nd_data_processor.data_cleanner import DataCleaner
 import os
+from func_timeout import func_set_timeout
 
 DaPr = DaPr.Core()
 Infra = Infra.Core()
@@ -39,6 +40,7 @@ class DeviceCheck(Connection):
     def set_report_file_name(self):
         return "{}.csv".format(self.string_host_ip)
 
+    @func_set_timeout(20)
     def connect_device_i(self, **cfg):
         try:
             device = self.connect_device(**cfg)
@@ -84,12 +86,12 @@ class DeviceCheck(Connection):
         hostname = DaPr.del_invalid_str(regx, cfg["hostname"])
         self.string_host_ip = "{}_{}".format(hostname, cfg["ip"])
         task_list = cfg['tasks']
-        self.result_head[1] = self.string_host_ip
         for task in task_list:
             for cmd in self.tasks[task]['commands']:
                 cmd_cfg, data = self.command_executor(device, cmd)
                 if cmd_cfg['save_to'] in ['csv', 'CSV']:
-                    d_pkg = {self.result_head[0]: cmd_cfg['cmd'], self.result_head[1]: data}
+                    self.result_head[1] = self.string_host_ip
+                    d_pkg = {self.result_head[0]:"{}_[{}]".format(cmd, cmd_cfg['cmd']), self.result_head[1]: data}
                     self.result_data_temp_store.append(d_pkg)
                 elif cmd_cfg['save_to'] in ['txt', 'TXT']:
                     date = Format.CurrentTime.YYYYMMDD
