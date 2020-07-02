@@ -35,9 +35,10 @@ class Interface:
         file_ext = '_merged_report.xlsx'
         try:
             output_file = os.path.join(dc.report_folder_path, os.path.split(dc.report_folder_path)[-1] + file_ext)
-            mergeReports.merge_direct(dc.report_folder_path, output_file)
-        except:
+            mergeReports.merge_direct(dc.report_folder_path, output_file,transpose_index_and_columns=True)
+        except Exception as e:
             print("[!]Error")
+            print(e)
         end = time.time()
         input("[+]Done.Total process time used: {} seconds".format(int(end-start)))
 
@@ -53,7 +54,8 @@ class Interface:
         cfg["enablepass"] = account['enablepass']
         try:
             dc.get_info(**cfg)
-        except:
+        except Exception as e:
+            print(e)
             pass
 
     def show_progress(self):

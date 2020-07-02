@@ -6,8 +6,9 @@ title = """
    @@@    @@@@   @@    @@@   @@@@   
    @@@     @@@   @@@@@@@      f@@@@@@@
                                 v{}
+                ReleaseDate:{}
 """
 
 
 def show():
-    print(title.format("1.0.0"))
+    print(title.format("1.0.1", "2020/07/02"))

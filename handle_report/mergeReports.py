@@ -32,18 +32,18 @@ def init_path(group_name):
         init_path(group_name)
 
 
-def merge(group_name, show_msg=False):
+def merge(group_name, show_msg=False, transpose_index_and_columns=False):
     # Load Report
     report_folder, report_objs, report_objs_dev, report_objs_dev_objs = init_path(group_name)
     output_file = report_objs_dev + '_merged_report.xlsx'
     dfs = load_data(report_folder, show_msg)
-    merge_data(dfs, output_file)
+    merge_data(dfs, output_file, transpose_index_and_columns)
     return report_folder, output_file
 
 
-def merge_direct(report_folder, output_file, show_msg=False):
+def merge_direct(report_folder, output_file, show_msg=False,transpose_index_and_columns=False):
     dfs = load_data(report_folder, show_msg)
-    merge_data(dfs, output_file)
+    merge_data(dfs, output_file,transpose_index_and_columns)
 
 
 def load_data(report_folder, show_msg=False):
@@ -63,11 +63,13 @@ def load_data(report_folder, show_msg=False):
     return dfs
 
 
-def merge_data(dfs, output_file):
+def merge_data(dfs, output_file, transpose_index_and_columns=False):
     if len(dfs) != 0:
         final = dfs[0]
         for df in dfs[1:]:
             final = final.join(df, how='outer', lsuffix='item')
+        if transpose_index_and_columns:
+            final = final.T
         final.to_excel(output_file, engine='xlsxwriter')
     else:
         print("[!]No Data")

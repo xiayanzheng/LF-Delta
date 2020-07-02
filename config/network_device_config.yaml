@@ -153,7 +153,7 @@ commands:
     save_to: csv
   u_show_env_all_power_supply:
     cmd: show env all
-    rule: ru2
+    rule: ru11
     save_to: csv
   u_show_env_all_tempature:
     cmd: show env all
