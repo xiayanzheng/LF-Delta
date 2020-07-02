@@ -16,11 +16,6 @@ Save = Save.Core()
 class DeviceCheck(Connection):
 
     def __init__(self):
-        self.commands = None
-        self.tasks = None
-        self.groups = None
-        self.accounts = None
-        self.regx_rules = None
         self.logfile = None
         self.data_clean_enabled = True
         self.data_cleaner = DataCleaner()
@@ -39,16 +34,6 @@ class DeviceCheck(Connection):
 
     def set_report_file_name(self):
         return "{}.csv".format(self.string_host_ip)
-
-    @func_set_timeout(20)
-    def connect_device_i(self, **cfg):
-        try:
-            device = self.connect_device(**cfg)
-            cfg["hostname"] = device.get_hostname()
-            print("[+]Device Connected")
-            return cfg, device
-        except (EOFError, NetMikoTimeoutException):
-            print('[!]Can not connect to Device')
 
     def command_executor(self, device, cmd):
         title = "[+]Executing Command [{}]".format(cmd)
@@ -80,7 +65,6 @@ class DeviceCheck(Connection):
         return True
 
     def get_info(self, **cfg):
-        cfg, device = self.connect_device_i(**cfg)
         self.set_report_folder_path()
         regx = '[^A-Za-z0-9\u4e00-\u9fa5\\-]'
         hostname = DaPr.del_invalid_str(regx, cfg["hostname"])
@@ -99,9 +83,12 @@ class DeviceCheck(Connection):
                     Infra.handle_folder_file_path(log_file_path)
                     print("[+]Writing data to txt")
                     self.export_data_to_txt(log_file_path, cmd_cfg, data)
-        device.close()
-        print("[+]Device Disconnected")
         # print(self.set_report_folder_path(), self.set_file_name())
         print("[+]Data ready")
         self.export_data_to_csv()
         # Infra.close_file_conn(self.logfile)
+
+    def show_progress(self):
+        total = self.total_task_num
+        wait = self.wait_task_num
+        print("[+]Task status:Total {},Wait {}".format(total,wait))

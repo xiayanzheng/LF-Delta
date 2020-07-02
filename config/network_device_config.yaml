@@ -61,14 +61,14 @@ groups:
       host: 10.98.102.245
       port: 0
       account: 001
-      device_type: cisco_wlc_ssh
+      device_type: cisco_ios
       tasks: [Cisco_AC_AP]
     AMS_GWAN_AC_2:
       desc: CHCS2-WC-H02
       host: 10.98.102.244
       port: 0
       account: 001
-      device_type: cisco_wlc_ssh
+      device_type: cisco_ios
       tasks: [Cisco_AC_AP]
   Test:
     AMS_GWAN_SW_8:
