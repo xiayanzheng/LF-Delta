@@ -1,12 +1,18 @@
 {
   "windows_event_config": [
-        {
-            "log_file": ["System","Application"],
-            "EventTypes": ["error", "warning"],
-            "reverse_day": "10",
-            "start_date": "2019/10/21",
-            "end_date": "2019/10/23",
-            "event_items": "*"
-        }
-    ]
+    {
+      "log_file": [
+        "System",
+        "Application"
+      ],
+      "EventTypes": [
+        "error",
+        "warning"
+      ],
+      "reverse_day": "10",
+      "start_date": "2019/10/21",
+      "end_date": "2019/10/23",
+      "event_items": "*"
+    }
+  ]
 }

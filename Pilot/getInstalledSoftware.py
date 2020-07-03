@@ -1,4 +1,4 @@
-from init.init_imports import winreg,Save
+from init.init_imports import winreg, Save
 
 
 class Entry:
@@ -9,10 +9,10 @@ class Entry:
         self.total_installed_software_num = None
         self.installed_software = None
 
-    def open_reg(self,reg_dir):
+    def open_reg(self, reg_dir):
         return winreg.ConnectRegistry(None, reg_dir)
 
-    def close_reg(self,reg_root):
+    def close_reg(self, reg_root):
         winreg.CloseKey(reg_root)
 
     def get_installed_software_list(self):
@@ -42,10 +42,10 @@ class Entry:
         winreg.CloseKey(installed_soft64)
         self.close_reg(reg_root)
 
-    def save_install_software_list(self,log_path, log_file):
+    def save_install_software_list(self, log_path, log_file):
         data = self.installed_software
         title = list(data[0].keys())
-        Save.toCSV(log_path, log_file, title, data)
+        Save.to_csv(log_path, log_file, title, data)
 
     def get_kav_version(self):
         reg_root = self.open_reg(winreg.HKEY_LOCAL_MACHINE)

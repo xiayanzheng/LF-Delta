@@ -48,11 +48,10 @@ class Entry:
             for k, v in info.items():
                 data.append({'item': k, 'data': v})
             if not debug:
-                Save.toCSV(log_path, log_file, header, data)
+                Save.to_csv(log_path, log_file, header, data)
             self.all_data = info
-        get_hardware_info()
 
-   
+        get_hardware_info()
 
     @show_status
     def get_disk_partitions(self, log_path, log_file):
@@ -74,7 +73,7 @@ class Entry:
                 info["disk_info"].append(disk)
                 disk_info = info['disk_info']
                 head = list(disk_info[0].keys())
-                Save.toCSV(log_path, log_file, headers=head, data=disk_info)
+                Save.to_csv(log_path, log_file, headers=head, data=disk_info)
                 for k, v in disk.items():
                     if k in ['total_gb', 'used_gb', 'free_gb', 'percentage_of_use']:
                         sk = "{}_{}_{}".format(disk["disk"], disk["fstype"], k)
@@ -117,7 +116,7 @@ class Entry:
         else:
             key = ['result']
             base = [{'result': 'No data'}]
-        Save.toCSV(log_path, log_file, key, base)
+        Save.to_csv(log_path, log_file, key, base)
 
     @show_status
     def get_ping_result(self, ip, log_path, log_file):
@@ -128,7 +127,7 @@ class Entry:
                              stderr=subprocess.PIPE,
                              shell=True)
         data = p.stdout.read().decode('gb2312')
-        Save.toTXT(log_path, log_file, data)
+        Save.to_txt(log_path, log_file, data)
 
     @show_status
     def get_license_key(self, log_path, log_file, debug=False):
@@ -151,7 +150,7 @@ class Entry:
 
         def save():
             keys = list(all_license[0].keys())
-            Save.toCSV(log_path, log_file, keys, all_license)
+            Save.to_csv(log_path, log_file, keys, all_license)
 
         windows()
         if not debug:
@@ -163,7 +162,7 @@ class Entry:
         data_f = []
         for k, v in self.all_data.items():
             data_f.append({headers[0]: k, headers[1]: v})
-        Save.toCSV(log_path, log_file, headers, data_f)
+        Save.to_csv(log_path, log_file, headers, data_f)
 
     @show_status
     def get_installed_software(self, log_path, log_file):
@@ -179,7 +178,7 @@ class Entry:
                     installed_temp[key] = None
             installed.append(installed_temp)
         keys = list(installed[0].keys())
-        Save.toCSV(log_path, log_file, keys, installed)
+        Save.to_csv(log_path, log_file, keys, installed)
 
     @show_status
     def get_windows_update_status(self, log_path, log_file, debug=False):
@@ -195,7 +194,7 @@ class Entry:
                 all_data.append(unit)
             n_key = list(all_data[0].keys())
             if not debug_c:
-                Save.toCSV(log_path_c, log_file_c, n_key, all_data)
+                Save.to_csv(log_path_c, log_file_c, n_key, all_data)
             return all_data
 
         def get_windows_date():

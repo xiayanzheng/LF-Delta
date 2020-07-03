@@ -1,9 +1,11 @@
 import os
-from lfcomlib.Jessica import Infra
+
 from lfcomlib.Jessica import DaPr
+from lfcomlib.Jessica import Infra
 
 DaPr = DaPr.Core()
 Infra = Infra.Core()
+
 
 class GlobalConfig:
 
@@ -26,7 +28,7 @@ class GlobalConfig:
     def set_value(self):
         self.config_root = DaPr.find_path_backward(os.getcwd(), "config")
         self.app_config_file_name = 'app_config.json'
-        self.app_config = Infra.read_json(self.config_root,self.app_config_file_name)
+        self.app_config = Infra.read_json(self.config_root, self.app_config_file_name)
         self.server_config = Infra.read_json(self.config_root, 'server_config.json')
         self.windows_event_config = self.server_config['windows_event_config']
         self.version = self.app_config['version']

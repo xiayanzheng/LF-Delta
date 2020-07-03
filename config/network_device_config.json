@@ -2,37 +2,37 @@
   "groups": {
     "groupOne": {
       "CiscoAC": {
-          "desc": "CiscoAC",
-          "host": "10.98.96.46",
-          "port": 0,
-          "account":"001",
-          "device_type":"cisco_ios",
-          "tasks": [
-            "Check Status"
-          ]
-        }
+        "desc": "CiscoAC",
+        "host": "10.98.96.46",
+        "port": 0,
+        "account": "001",
+        "device_type": "cisco_ios",
+        "tasks": [
+          "Check Status"
+        ]
+      }
     },
     "groupTwo": {
       "CiscoAC": {
-          "desc": "CiscoAC",
-          "host": "10.98.102.245",
-          "port": 0,
-          "account":"001",
-          "device_type":"cisco_wlc_ssh",
-          "tasks": [
-            "Check Cisco AC"
-          ]
-        },
+        "desc": "CiscoAC",
+        "host": "10.98.102.245",
+        "port": 0,
+        "account": "001",
+        "device_type": "cisco_wlc_ssh",
+        "tasks": [
+          "Check Cisco AC"
+        ]
+      },
       "Cisco": {
-          "desc": "CiscoOne",
-          "host": "10.98.102.249",
-          "port": 0,
-          "account":"001",
-          "device_type":"cisco_ios",
-          "tasks": [
-            "Check Cisco 3560 Status"
-          ]
-        }
+        "desc": "CiscoOne",
+        "host": "10.98.102.249",
+        "port": 0,
+        "account": "001",
+        "device_type": "cisco_ios",
+        "tasks": [
+          "Check Cisco 3560 Status"
+        ]
+      }
     }
   },
   "tasks": {
@@ -62,12 +62,12 @@
     }
   },
   "commands": {
-    "3560_show_cpu":"show process cpu",
-    "3560_show_mem":"show mem summary",
-    "3560_show_proc_mem":"show processes memory",
-    "3560_show_fan_pwr_tem_status":"show env all",
-    "3560_show_log":"show logging",
-    "3560_show_version":"show version",
+    "3560_show_cpu": "show process cpu",
+    "3560_show_mem": "show mem summary",
+    "3560_show_proc_mem": "show processes memory",
+    "3560_show_fan_pwr_tem_status": "show env all",
+    "3560_show_log": "show logging",
+    "3560_show_version": "show version",
     "3560_show_interface_status": "show interface status err-disabled",
     "3560_show_ip_traffic": "show ip traffic",
     "ac_show_memory_summary": "show memory summary",
@@ -76,7 +76,7 @@
     "sw_3_show_switch": "show switch"
   },
   "accounts": {
-    "001":{
+    "001": {
       "username": "root",
       "password": "Hiamscs123",
       "enablepass": "Hiamscs123"

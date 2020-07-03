@@ -1,5 +1,8 @@
-import os, prettytable
+import os
+import prettytable
+
 from pandas import read_csv
+
 from lfcomlib.Jessica import DaPr
 
 DaPr = DaPr.Core()
@@ -41,9 +44,9 @@ def merge(group_name, show_msg=False, transpose_index_and_columns=False):
     return report_folder, output_file
 
 
-def merge_direct(report_folder, output_file, show_msg=False,transpose_index_and_columns=False):
+def merge_direct(report_folder, output_file, show_msg=False, transpose_index_and_columns=False):
     dfs = load_data(report_folder, show_msg)
-    merge_data(dfs, output_file,transpose_index_and_columns)
+    merge_data(dfs, output_file, transpose_index_and_columns)
 
 
 def load_data(report_folder, show_msg=False):

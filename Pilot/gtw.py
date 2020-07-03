@@ -584,6 +584,7 @@ def install_updates(cached=None, includes=None, retries=5, categories=None):
         comment = 'could not get results, but updates were installed.'
     return 'Windows is up to date. \n{0}'.format(comment)
 
+
 # To the King #
 
 pw = PyWinUpdater()

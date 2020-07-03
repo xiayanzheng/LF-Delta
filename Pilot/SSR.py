@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-import pexpect
-from pexpect import popen_spawn
-import os
 import datetime
 import time
+
+import pexpect
 
 today = datetime.date.today().strftime('%Y%m%d')
 

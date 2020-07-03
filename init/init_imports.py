@@ -1,6 +1,6 @@
 import os
-from init.init_cfg import GlobalConfig
 
+from init.init_cfg import GlobalConfig
 
 global_config = GlobalConfig()
 global_config.set_value()

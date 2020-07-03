@@ -1,18 +1,16 @@
-from netmiko import ConnectHandler
-from netmiko.ssh_exception import NetMikoTimeoutException
-from netmiko.cisco_base_connection import CiscoBaseConnection
-import time
-import sys
-import getpass
-import re
 import io
-import os
+import re
+
+from netmiko import ConnectHandler
+from netmiko.cisco_base_connection import CiscoBaseConnection
+
 
 # import StringIO
 
 
 class Connection(CiscoBaseConnection):
-    def __init__(self, username, password, enablepass,device_type):
+
+    def __init__(self, username, password, enablepass, device_type):
         self.username = username
         self.password = password
         self.enablepass = enablepass
@@ -20,7 +18,7 @@ class Connection(CiscoBaseConnection):
         self.hostname = None
 
     def connect_device(self, **cfg):
-        ip = cfg['ip']
+        ip = cfg['host']
         username = cfg['username']
         password = cfg['password']
         enable_pass = cfg['enablepass']
@@ -28,7 +26,6 @@ class Connection(CiscoBaseConnection):
         device = Connection(username, password, enable_pass, device_type)
         device.cisco_device(ip)
         return device
-
 
     def cisco_device(self, iplist):
         self.device = {

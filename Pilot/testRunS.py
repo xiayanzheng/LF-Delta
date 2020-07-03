@@ -1,10 +1,9 @@
 #!/usr/bin/env python
-import subprocess
-import sys
 import datetime
 import re
-today = datetime.date.today().strftime('%Y%m%d')
+import subprocess
 
+today = datetime.date.today().strftime('%Y%m%d')
 
 ip = "10.98.102.254"
 passwd = "Hiamscs123"
@@ -18,8 +17,8 @@ p = subprocess.Popen(cmd,
 for line in iter(p.stdout.readline, b''):
     de_line = line.decode('gb2312')
     print(de_line)
-    fd = re.findall(r'\b\d+\b',de_line)
-    rc = re.findall(r'=(.*?ms)',de_line)
-    print(fd,rc)
+    fd = re.findall(r'\b\d+\b', de_line)
+    rc = re.findall(r'=(.*?ms)', de_line)
+    print(fd, rc)
 p.stdout.close()
 p.wait()

@@ -61,14 +61,14 @@ groups:
       host: 10.98.102.245
       port: 0
       account: 001
-      device_type: cisco_ios
+      device_type: cisco_wlc_ssh
       tasks: [Cisco_AC_AP]
     AMS_GWAN_AC_2:
       desc: CHCS2-WC-H02
       host: 10.98.102.244
       port: 0
       account: 001
-      device_type: cisco_ios
+      device_type: cisco_wlc_ssh
       tasks: [Cisco_AC_AP]
   Test:
     AMS_GWAN_SW_8:
@@ -85,6 +85,29 @@ groups:
       account: 001
       device_type: cisco_wlc_ssh
       tasks: [Cisco_AC_AP]
+  Test_2:
+    AMS_GWAN_AC_1:
+      desc: CHCS2-WC-H01
+      host: 10.98.102.245
+      port: 0
+      account: 001
+      device_type: cisco_wlc_ssh
+      tasks: [Cisco_AC_AP]
+  async_test:
+    AMS_GWAN_SW_7:
+      desc: CHCS2-ES-H06
+      host: 10.98.102.236
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
+    AMS_GWAN_SW_8:
+      desc: CHCS2-ES-H07
+      host: 10.98.102.235
+      port: 0
+      account: 001
+      device_type: cisco_ios
+      tasks: [Cisco_2960X]
 tasks:
   Cisco_3850_New:
     commands:
@@ -117,10 +140,10 @@ tasks:
     commands:
       [
         u_show_process_cpu,
-        u_show_process_memory,
+        sw_stack_process_mem,
         u_show_env_all_fan,
         u_show_env_all_power_supply,
-        u_show_env_all_tempature,
+        sw_stack_tempure,
         u_show_logging,
         u_show_switch,
         u_show_version,
@@ -203,6 +226,14 @@ commands:
     cmd: show ap uptime
     rule: transparent
     save_to: txt
+  sw_stack_tempure:
+    cmd: show env all
+    rule: sw_stack_temp
+    save_to: csv
+  sw_stack_process_mem:
+    cmd: show processes memory
+    rule: transparent
+    save_to: txt
 regx_rules:
   transparent:
     rule: None
@@ -248,6 +279,9 @@ regx_rules:
     method: [findall_multiline_data]
   ru14:
     rule: Processor.+Driver
+    method: [findall_multiline_data]
+  sw_stack_temp:
+    rule: TEMPERATURE
     method: [findall_multiline_data]
 accounts:
   001:

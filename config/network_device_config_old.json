@@ -2,67 +2,67 @@
   "groups": {
     "groupOne": {
       "Cisco": {
-          "desc": "CiscoOne",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco R1"
-          ]
-        },
+        "desc": "CiscoOne",
+        "host": "192.168.229.128",
+        "port": 44293,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco R1"
+        ]
+      },
       "Cisco2": {
-          "desc": "CiscoTwo",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco R1"
-          ]
-        },
+        "desc": "CiscoTwo",
+        "host": "192.168.229.128",
+        "port": 44293,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco R1"
+        ]
+      },
       "Cisco3": {
-          "desc": "CiscoNeo",
-          "host": "192.168.229.128",
-          "port": 44293,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco R1"
-          ]
-        }
+        "desc": "CiscoNeo",
+        "host": "192.168.229.128",
+        "port": 44293,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco R1"
+        ]
+      }
     },
     "groupTwo": {
       "Cisco": {
-          "desc": "CiscoOne",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco Switch internet status"
-          ]
-        },
+        "desc": "CiscoOne",
+        "host": "192.168.229.128",
+        "port": 42881,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco Switch internet status"
+        ]
+      },
       "Cisco2": {
-          "desc": "CiscoTwo",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco Switch internet status"
-          ]
-        },
+        "desc": "CiscoTwo",
+        "host": "192.168.229.128",
+        "port": 42881,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco Switch internet status"
+        ]
+      },
       "Cisco3": {
-          "desc": "CiscoNeo",
-          "host": "192.168.229.128",
-          "port": 42881,
-          "username": "",
-          "password": "",
-          "device_tasks": [
-            "Get Cisco Switch internet status"
-          ]
-        }
+        "desc": "CiscoNeo",
+        "host": "192.168.229.128",
+        "port": 42881,
+        "username": "",
+        "password": "",
+        "device_tasks": [
+          "Get Cisco Switch internet status"
+        ]
+      }
     }
   },
   "tasks": {
@@ -108,7 +108,10 @@
     },
     "show network status": {
       "execute_type": "direct",
-      "expect": ["Switch","CHCS-CS-H01"],
+      "expect": [
+        "Switch",
+        "CHCS-CS-H01"
+      ],
       "response": "show int statu\n",
       "timeout": 5,
       "time_wait": 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+
 import pywintypes
 import win32evtlog
 
@@ -53,7 +54,6 @@ def get_events_xmls(channel_name="Application", events_batch_num=100, backwards=
 
 
 def main():
-    import sys, os
     from collections import OrderedDict
     standard_log_names = ["Application", "System", "Security"]
     source_channel_dict = OrderedDict()
@@ -61,19 +61,20 @@ def main():
     for item in standard_log_names:
         source_channel_dict[item] = item
 
-    for item in ["Windows Powershell"]: # !!! This works on my machine (96 events)
+    for item in ["Windows Powershell"]:  # !!! This works on my machine (96 events)
         source_channel_dict[item] = item
 
     for source, channel in source_channel_dict.items():
         print(source, channel)
         logs = get_eventlogs(source_name=source)
         xmls = get_events_xmls(channel_name=channel)
-        #print("\n", get_record_data(logs[0]))
-        #print(xmls[0])
-        #print("\n", get_record_data(logs[-1]))
-        #print(xmls[-1])
+        # print("\n", get_record_data(logs[0]))
+        # print(xmls[0])
+        # print("\n", get_record_data(logs[-1]))
+        # print(xmls[-1])
         print(len(logs))
         print(len(xmls))
+
 
 if __name__ == "__main__":
     print("Python {:s} on {:s}\n".format(sys.version, sys.platform))

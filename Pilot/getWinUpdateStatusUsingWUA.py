@@ -1,6 +1,4 @@
-import pythoncom, win32com.client
-
-
+import win32com.client
 
 
 class WinUpdateInterface:
@@ -29,7 +27,7 @@ class WinUpdateInterface:
 
     def search(self):
         seeker = self.keeper.CreateUpdateSearcher()
-        uh = seeker.QueryHistory(0,1000)
+        uh = seeker.QueryHistory(0, 1000)
         print(uh)
         for his in uh:
             nh = his

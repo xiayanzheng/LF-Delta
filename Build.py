@@ -1,4 +1,5 @@
 import os
+
 from init.init_imports import Infra
 
 builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
