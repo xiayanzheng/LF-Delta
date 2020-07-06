@@ -7,7 +7,8 @@ DaPr = DaPr.Core()
 
 class CommonDataProcess:
 
-    def findall_single_line_data(self, *args):
+    @staticmethod
+    def findall_single_line_data(*args):
         regex_rule, data = args[0], args[1]
         data = re.findall(regex_rule, data)
         new_data = []
@@ -22,6 +23,7 @@ class CommonDataProcess:
         single_line_data = DaPr.convert_multiline_to_single_line(data, "|", " ", "")
         return self.findall_single_line_data(regex_rule, single_line_data)
 
-    def bypass(self, *args):
+    @staticmethod
+    def bypass(*args):
         regex_rule, data = args[0], args[1]
         return data

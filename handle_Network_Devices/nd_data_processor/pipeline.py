@@ -28,15 +28,16 @@ class PackDeviceData:
         regx = '[^A-Za-z0-9\u4e00-\u9fa5\\-]'
         hostname = DaPr.del_invalid_str(regx, cfg["hostname"])
         real_cmd = cmd_cfg['cmd']
-        self.string_host_ip = "{}_{}".format(hostname, cfg["host"])
-        data = self.clean_data(data, cmd_name)
+        host = cfg["host"]
+        self.string_host_ip = "{}_{}".format(hostname, host)
+        data = self.clean_data(data, cmd_name, host)
         self.export_data(data, cmd_name, real_cmd, cmd_cfg)
 
     def set_report_file_name(self):
         return "{}.csv".format(self.string_host_ip)
 
-    def clean_data(self, data, cmd):
-        title = "[+]Executing Command [{}]".format(cmd)
+    def clean_data(self, data, cmd, host):
+        title = "[+][Host:{}] Executing Command [{}]".format(host,cmd)
         print(title)
         if self.data_clean_enabled:
             data = self.data_cleaner.clean(cmd, data, NdcHub.regx_rules, NdcHub.commands)

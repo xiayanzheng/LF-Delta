@@ -13,8 +13,7 @@ async def task(cfg):
         "secret": cfg["enablepass"],
         "host": cfg["host"]
     }
-    async with netdev.create(**connect_param) as ios:
-        # Testing sending simple command
+    async with netdev.create(**connect_param) as netdev_device:
         task_list = cfg['tasks']
         cfg["hostname"] = cfg["desc"]
         dc = PackDeviceData()
@@ -22,7 +21,7 @@ async def task(cfg):
             for cmd_name in NdcHub.tasks[task_i]['commands']:
                 cmd_cfg = NdcHub.commands[cmd_name]
                 real_cmd = cmd_cfg['cmd']
-                data = await ios.send_command(real_cmd)
+                data = await netdev_device.send_command(real_cmd)
                 dc.pipeline_flow(cmd_name, cmd_cfg, data, **cfg)
         dc.export_data_to_csv()
 

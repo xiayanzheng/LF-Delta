@@ -17,7 +17,8 @@ class Connection(CiscoBaseConnection):
         self.device_type = device_type
         self.hostname = None
 
-    def connect_device(self, **cfg):
+    @staticmethod
+    def connect_device(**cfg):
         ip = cfg['host']
         username = cfg['username']
         password = cfg['password']
