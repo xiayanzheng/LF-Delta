@@ -1,0 +1,48 @@
+transparent:
+  rule: None
+  method: [bypass]
+ru1:
+  rule: CPU utilization.+
+  method: [findall_single_line_data]
+ru2:
+  rule: FAN.+
+  method: [findall_single_line_data]
+ru3:
+  rule: System Temperature Value.+
+  method: [findall_single_line_data]
+ru4:
+  rule: TEMPERATURE is.+
+  method: [findall_single_line_data]
+ru5:
+  rule: Temperature State.+
+  method: [findall_single_line_data]
+ru6:
+  rule: .+Version.+RELEASE SOFTWARE
+  method: [findall_single_line_data]
+ru7:
+  rule: Syslog logging.+
+  method: [findall_single_line_data]
+ru8:
+  rule: .+uptime.+
+  method: [findall_single_line_data]
+ru9:
+  rule: Processor.+PID
+  method: [findall_multiline_data]
+ru10:
+  rule: TCP.+\\)
+  method: [findall_multiline_data]
+ru11:
+  rule: Sys Pwr.+SW  Status
+  method: [findall_multiline_data]
+ru12:
+  rule: Total.+System.+Buffers
+  method: [findall_multiline_data]
+ru13:
+  rule: System Up Time.+secs
+  method: [findall_multiline_data]
+ru14:
+  rule: Processor.+Driver
+  method: [findall_multiline_data]
+sw_stack_temp:
+  rule: TEMPERATURE
+  method: [findall_multiline_data]

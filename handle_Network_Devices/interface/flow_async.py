@@ -23,6 +23,7 @@ async def task(cfg):
                 real_cmd = cmd_cfg['cmd']
                 data = await netdev_device.send_command(real_cmd)
                 dc.pipeline_flow(cmd_name, cmd_cfg, data, **cfg)
+        netdev_device.disconnect()
         dc.export_data_to_csv()
 
 

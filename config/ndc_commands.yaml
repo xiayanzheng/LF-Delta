@@ -1,0 +1,72 @@
+u_show_process_cpu:
+  cmd: show process cpu
+  rule: ru1
+  save_to: csv
+u_show_process_memory:
+  cmd: show processes memory
+  rule: ru14
+  save_to: csv
+u_show_env_all_fan:
+  cmd: show env all
+  rule: ru2
+  save_to: csv
+u_show_env_all_power_supply:
+  cmd: show env all
+  rule: ru11
+  save_to: csv
+u_show_env_all_tempature:
+  cmd: show env all
+  rule: ru3
+  save_to: csv
+u_show_logging:
+  cmd: show logging
+  rule: transparent
+  save_to: txt
+u_show_ip_traffic:
+  cmd: show ip traffic
+  rule: ru10
+  save_to: txt
+u_show_interface_status_err_disabled:
+  cmd: show interface status err-disabled
+  rule: transparent
+  save_to: csv
+u_show_version:
+  cmd: show version
+  rule: ru8
+  save_to: csv
+u_show_switch:
+  cmd: show switch
+  rule: transparent
+  save_to: csv
+u_ac_show_cpu:
+  cmd: show cpu
+  rule: transparent
+  save_to: txt
+u_ac_show_memory_statistics:
+  cmd: show memory statistics
+  rule: transparent
+  save_to: txt
+u_ac_show_sysinfo:
+  cmd: show sysinfo
+  rule: transparent
+  save_to: txt
+u_ac_show_stats_switch_summary:
+  cmd: show stats switch summary
+  rule: transparent
+  save_to: txt
+u_ac_show_ap_led_state_all:
+  cmd: show ap led-state all
+  rule: transparent
+  save_to: txt
+u_ac_show_ap_uptime:
+  cmd: show ap uptime
+  rule: transparent
+  save_to: txt
+sw_stack_tempure:
+  cmd: show env all
+  rule: sw_stack_temp
+  save_to: csv
+sw_stack_process_mem:
+  cmd: show processes memory
+  rule: transparent
+  save_to: txt

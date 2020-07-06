@@ -1,0 +1,109 @@
+GWAN:
+  AMS_GWAN_SW_1:
+    desc: CHCS2-MS-H01
+    host: 10.98.102.243
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_3850_New]
+  AMS_GWAN_SW_2:
+    desc: CHCS2-SS-H01
+    host: 10.98.102.242
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_3:
+    desc: CHCS2-SS-H01
+    host: 10.98.102.241
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_4:
+    desc: CHCS2-ES-H02
+    host: 10.98.102.240
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X_stack]
+  AMS_GWAN_SW_5:
+    desc: CHCS2-ES-H03
+    host: 10.98.102.239
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_6:
+    desc: CHCS2-ES-H04
+    host: 10.98.102.238
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_7:
+    desc: CHCS2-ES-H06
+    host: 10.98.102.236
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_8:
+    desc: CHCS2-ES-H07
+    host: 10.98.102.235
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_AC_1:
+    desc: CHCS2-WC-H01
+    host: 10.98.102.245
+    port: 0
+    account: 001
+    device_type: cisco_wlc_ssh
+    tasks: [Cisco_AC_AP]
+  AMS_GWAN_AC_2:
+    desc: CHCS2-WC-H02
+    host: 10.98.102.244
+    port: 0
+    account: 001
+    device_type: cisco_wlc_ssh
+    tasks: [Cisco_AC_AP]
+Test:
+  AMS_GWAN_SW_8:
+    desc: CHCS2-ES-H07
+    host: 10.98.102.235
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_AC_1:
+    desc: CHCS2-WC-H01
+    host: 10.98.102.245
+    port: 0
+    account: 001
+    device_type: cisco_wlc_ssh
+    tasks: [Cisco_AC_AP]
+Test_2:
+  AMS_GWAN_AC_1:
+    desc: CHCS2-WC-H01
+    host: 10.98.102.245
+    port: 0
+    account: 001
+    device_type: cisco_wlc_ssh
+    tasks: [Cisco_AC_AP]
+async_test:
+  AMS_GWAN_SW_7:
+    desc: CHCS2-ES-H06
+    host: 10.98.102.236
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]
+  AMS_GWAN_SW_8:
+    desc: CHCS2-ES-H07
+    host: 10.98.102.235
+    port: 0
+    account: 001
+    device_type: cisco_ios
+    tasks: [Cisco_2960X]

@@ -1,0 +1,52 @@
+Cisco_3850_New:
+    commands:
+      [
+        u_show_process_cpu,
+        u_show_process_memory,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        u_show_env_all_tempature,
+        u_show_logging,
+        u_show_ip_traffic,
+        u_show_interface_status_err_disabled,
+        u_show_version,
+        u_show_switch,
+      ]
+Cisco_2960X:
+    commands:
+      [
+        u_show_process_cpu,
+        u_show_process_memory,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        u_show_env_all_tempature,
+        u_show_logging,
+        u_show_version,
+        u_show_interface_status_err_disabled,
+        u_show_ip_traffic,
+      ]
+Cisco_2960X_stack:
+    commands:
+      [
+        u_show_process_cpu,
+        sw_stack_process_mem,
+        u_show_env_all_fan,
+        u_show_env_all_power_supply,
+        sw_stack_tempure,
+        u_show_logging,
+        u_show_switch,
+        u_show_version,
+        u_show_interface_status_err_disabled,
+        u_show_ip_traffic,
+      ]
+Cisco_AC_AP:
+    commands:
+      [
+        u_ac_show_ap_led_state_all,
+        u_ac_show_ap_uptime,
+        u_ac_show_cpu,
+        u_ac_show_memory_statistics,
+        u_ac_show_stats_switch_summary,
+        u_ac_show_sysinfo,
+        u_show_logging,
+      ]

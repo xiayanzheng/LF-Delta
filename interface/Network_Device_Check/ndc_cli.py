@@ -13,12 +13,12 @@ class Cli:
 
     def load_config(self):
         config_file_path = DaPr.find_path_backward(os.getcwd(), 'config')
-        cfg = Infra.read_yaml(config_file_path, 'network_device_config.yaml')
-        NdcHub.commands = cfg["commands"]
-        NdcHub.tasks = cfg["tasks"]
-        NdcHub.groups = cfg["groups"]
-        NdcHub.accounts = cfg["accounts"]
-        NdcHub.regx_rules = cfg["regx_rules"]
+        cfg_uni_txt = "ndc_"
+        cfg_ext = ".yaml"
+        cfg_list = ["commands", "tasks", "groups", "accounts", "regx_rules"]
+        for cfg_i in cfg_list:
+            cfg_v = Infra.read_yaml(config_file_path, "{}{}{}".format(cfg_uni_txt, cfg_i, cfg_ext))
+            setattr(NdcHub, cfg_i, cfg_v)
         selected_group = self.select_group(NdcHub.groups)
         return selected_group
 
@@ -41,6 +41,5 @@ class Cli:
     def set_report_folder_path():
         f_name = "NetworkDevice_{}".format(Format.CurrentTime.YYYYMMDD)
         NdcHub.report_folder_path = os.path.join(DaPr.find_path_backward(os.getcwd(), "Reports"), f_name)
-        if not os.path.exists(NdcHub.report_folder_path):
-            Infra.create_folder(NdcHub.report_folder_path)
+        Infra.handle_folder_file_path(NdcHub.report_folder_path)
         return NdcHub.report_folder_path
