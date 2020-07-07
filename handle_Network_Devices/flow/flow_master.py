@@ -1,9 +1,9 @@
 import asyncio
 import os
 from common.data_hub import NdcHub
-from handle_Network_Devices.interface import flow_async
-from handle_Network_Devices.interface.flow_single import Dec
-from handle_Network_Devices.interface import show_title
+from handle_Network_Devices.flow import flow_async
+from handle_Network_Devices.flow.flow_single import Dec
+from handle_Network_Devices.flow import show_title
 from handle_report import mergeReports
 from interface.Network_Device_Check.ndc_cli import Cli
 from lfcomlib.Jessica import DaPr
@@ -19,10 +19,10 @@ class Interface(Cli):
     @log_time_spend()
     def flow(self):
         show_title.show()
-        config = self.load_config()
+        selected_group_name, config = self.load_config()
         async_config_queue, single_config_queue = self.repack_config(config)
         NdcHub.total_task_num = len(async_config_queue) + len(single_config_queue)
-        self.set_report_folder_path()
+        self.set_report_folder_path(selected_group_name)
         self.run_async_task(async_config_queue)
         self.run_single_task(single_config_queue)
         print("[+]Data ready")

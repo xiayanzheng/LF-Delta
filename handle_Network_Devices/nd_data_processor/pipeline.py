@@ -45,11 +45,11 @@ class PackDeviceData:
         return data
 
     def export_data(self, data, cmd_name, real_cmd, cmd_cfg):
-        if cmd_cfg['save_to'] in ['csv', 'CSV']:
+        if cmd_cfg['save_to'].lower() in ['csv']:
             self.result_head[1] = self.string_host_ip
             d_pkg = {self.result_head[0]: "{}_[{}]".format(cmd_name, real_cmd), self.result_head[1]: data}
             self.result_data_temp_store.append(d_pkg)
-        elif cmd_cfg['save_to'] in ['txt', 'TXT']:
+        elif cmd_cfg['save_to'].lower() in ['txt']:
             date = Format.CurrentTime.YYYYMMDD
             log_file_path = os.path.join(NdcHub.report_folder_path, "{}_{}".format(self.string_host_ip, date))
             Infra.handle_folder_file_path(log_file_path)

@@ -195,7 +195,7 @@ commands:
     rule: ru8
     save_to: csv
   3560_show_interface_status:
-    cmd: show interface status err-disabled
+    cmd: show flow status err-disabled
     rule: transparent
     save_to: csv
   3560_show_ip_traffic:

@@ -49,7 +49,7 @@ class Connection(CiscoBaseConnection):
         result = self.connect.send_command(cmd)
         for interface in result.split('\n'):
             if 'up' in interface:
-                # print interface
+                # print flow
                 lines = io.StringIO(interface)
                 data = lines.read()
                 intername = ' '.join(re.findall('^Eth.+\/\d', data))

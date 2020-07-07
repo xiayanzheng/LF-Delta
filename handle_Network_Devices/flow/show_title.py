@@ -12,4 +12,4 @@ title = """
 
 
 def show():
-    print(title.format("1.0.0", "2020/07/03"))
+    print(title.format("1.0.1", "2020/07/07"))

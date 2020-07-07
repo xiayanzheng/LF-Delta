@@ -1,45 +1,70 @@
 import os
+
 import prettytable
+
 from common.data_hub import NdcHub
 from lfcomlib.Jessica import DaPr
-from lfcomlib.Jessica import Infra
 from lfcomlib.Jessica import Format
+from lfcomlib.Jessica import Infra
+from lfcomlib.Jessica import Security
+from lfcomlib.Jessica.Log import simple_err_log
 
 DaPr = DaPr.Core()
 Infra = Infra.Core()
+Security = Security.Core()
 
 
 class Cli:
 
     def load_config(self):
         config_file_path = DaPr.find_path_backward(os.getcwd(), 'config')
-        cfg_uni_txt = "ndc_"
-        cfg_ext = ".yaml"
+        config_index = Infra.read_yaml(config_file_path, "ndc_app_config.yaml")['config_file_location']
         cfg_list = ["commands", "tasks", "groups", "accounts", "regx_rules"]
         for cfg_i in cfg_list:
-            cfg_v = Infra.read_yaml(config_file_path, "{}{}{}".format(cfg_uni_txt, cfg_i, cfg_ext))
+            file = config_index[cfg_i]
+            if "\\" in file or "/" in file and os.path.isdir(file):
+                cfg_v = Infra.read_yaml(config_index[cfg_i])
+            else:
+                cfg_v = Infra.read_yaml(config_file_path, "{}".format(config_index[cfg_i]))
             setattr(NdcHub, cfg_i, cfg_v)
-        selected_group = self.select_group(NdcHub.groups)
-        return selected_group
+        self.repack_account()
+        selected_group_name, selected_group = self.select_group(NdcHub.groups)
+        return selected_group_name, selected_group
 
     @staticmethod
     def select_group(groups):
         group_list = []
         for k, v in groups.items():
-            group_list.append(k)
+            group_list.append({"group": k, "nod": len(v.items())})
         pt = prettytable.PrettyTable()
-        pt.field_names = ["ID", "Group"]
+        pt.field_names = ["ID", "Group", "Number of Devices"]
         for i in range(len(group_list)):
             no = i
-            group = group_list[i]
-            pt.add_row([no, group])
+            group = group_list[i]['group']
+            nod = group_list[i]['nod']
+            pt.add_row([no, group, nod])
         print(pt)
         selected = int(input("[>]Pls select a group by ID："))
-        return groups[group_list[selected]]
+        selected_group_name = group_list[selected]["group"]
+        return selected_group_name, groups[selected_group_name]
 
     @staticmethod
-    def set_report_folder_path():
-        f_name = "NetworkDevice_{}".format(Format.CurrentTime.YYYYMMDD)
+    def set_report_folder_path(selected_group_name):
+        f_name = "{}_{}".format(selected_group_name, Format.CurrentTime.YYYYMMDD)
         NdcHub.report_folder_path = os.path.join(DaPr.find_path_backward(os.getcwd(), "Reports"), f_name)
         Infra.handle_folder_file_path(NdcHub.report_folder_path)
         return NdcHub.report_folder_path
+
+    @staticmethod
+    @simple_err_log()
+    def repack_account():
+        sec_key = b'CiA6fx3T043gEkay37G8D200ZJ5WuKJdh9hbdvTRHL8='
+        decrypt_accounts = {}
+        accounts = NdcHub.accounts
+        for k, v in accounts.items():
+            new_inner = {}
+            for k2, v2 in v.items():
+                key = Security.decrypt(sec_key, v2)
+                new_inner[k2] = key.decode()
+            decrypt_accounts[k] = new_inner
+        NdcHub.accounts = decrypt_accounts

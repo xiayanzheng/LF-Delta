@@ -1,0 +1,7 @@
+config_file_location:
+  accounts: ndc_accounts.yaml
+  commands: ndc_commands.yaml
+  regx_rules: ndc_regx_rules.yaml
+  tasks: ndc_tasks.yaml
+  groups: \\10.97.19.61\Backup\yzxia\ndc_groups.yaml
+report_file_root: Reports

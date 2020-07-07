@@ -15,7 +15,7 @@ async def task(cfg):
     }
     async with netdev.create(**connect_param) as netdev_device:
         task_list = cfg['tasks']
-        cfg["hostname"] = cfg["desc"]
+        cfg["hostname"] = netdev_device.base_prompt
         dc = PackDeviceData()
         for task_i in task_list:
             for cmd_name in NdcHub.tasks[task_i]['commands']:
@@ -23,7 +23,6 @@ async def task(cfg):
                 real_cmd = cmd_cfg['cmd']
                 data = await netdev_device.send_command(real_cmd)
                 dc.pipeline_flow(cmd_name, cmd_cfg, data, **cfg)
-        netdev_device.disconnect()
         dc.export_data_to_csv()
 
 
