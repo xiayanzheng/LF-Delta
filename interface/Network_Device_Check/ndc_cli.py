@@ -3,6 +3,7 @@ import os
 import prettytable
 
 from common.data_hub import NdcHub
+from common.data_hub import Salt
 from lfcomlib.Jessica import DaPr
 from lfcomlib.Jessica import Format
 from lfcomlib.Jessica import Infra
@@ -63,14 +64,13 @@ class Cli:
     @staticmethod
     @simple_err_log()
     def repack_account():
-        sec_key = b'CiA6fx3T043gEkay37G8D200ZJ5WuKJdh9hbdvTRHL8='
         accounts = NdcHub.accounts
         try:
             decrypt_accounts = {}
             for k, v in accounts.items():
                 new_inner = {}
                 for k2, v2 in v.items():
-                    key = Security.decrypt(sec_key, v2)
+                    key = Security.decrypt(Salt.sec, v2)
                     new_inner[k2] = key.decode()
                 decrypt_accounts[k] = new_inner
             NdcHub.accounts = decrypt_accounts

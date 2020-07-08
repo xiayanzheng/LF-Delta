@@ -1,6 +1,9 @@
 import os
 
+import prettytable
+
 from lfcomlib.Jessica import Infra
+
 Infra = Infra.Core()
 
 
@@ -9,6 +12,22 @@ class BuildTools:
     def __init__(self):
         self.builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
         self.root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
+        self.tools = [
+            "build_info_collector",
+            "build_network_device_check",
+            "build_msg_encrypt_tool"
+        ]
+
+    def build(self):
+        pt = prettytable.PrettyTable()
+        pt.field_names = ["ID", "Tool"]
+        for i in range(len(self.tools)):
+            no = i
+            tool = self.tools[i]
+            pt.add_row([no, tool])
+        print(pt)
+        selected = input("Tool ID >")
+        getattr(self, self.tools[int(selected)])()
 
     def build_info_collector(self):
         tool_name = "infoCollector"
@@ -36,6 +55,10 @@ class BuildTools:
         params = "-F --hidden-import win32timezone "
         os.system("{} {} {}".format(self.builder, params, "NDCheck.py"))
 
+    def build_msg_encrypt_tool(self):
+        params = "-F --hidden-import win32timezone "
+        os.system("{} {} {}".format(self.builder, params, "MsgEncryptTool.py"))
+
 
 bt = BuildTools()
-bt.build_network_device_check()
+bt.build()

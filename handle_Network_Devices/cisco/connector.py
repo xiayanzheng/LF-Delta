@@ -47,7 +47,7 @@ class Connection(CiscoBaseConnection):
 
     def interface_info(self, cmd):
         result = self.connect.send_command(cmd)
-        for interface in result.split('\n'):
+        for interface in result.user_input_split('\n'):
             if 'up' in interface:
                 # print flow
                 lines = io.StringIO(interface)

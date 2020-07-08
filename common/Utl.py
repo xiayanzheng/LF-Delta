@@ -13,7 +13,7 @@ class Entry:
 
 def show_status(func):
     msg = '[{}]{}'
-    format_i = DaPrX.insert_value_to_list_and_merge([s.capitalize() for s in func.__name__.split("_")], " ")
+    format_i = DaPrX.insert_value_to_list_and_merge([s.capitalize() for s in func.__name__.user_input_split("_")], " ")
 
     @wraps(func)
     def wrapper(*args, **kwargs):
