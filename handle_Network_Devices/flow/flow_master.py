@@ -19,10 +19,10 @@ class Interface(Cli):
     @log_time_spend()
     def flow(self):
         show_title.show()
-        selected_group_name, config = self.load_config()
+        selected_group_name, config, config_report_root = self.load_config()
         async_config_queue, single_config_queue = self.repack_config(config)
         NdcHub.total_task_num = len(async_config_queue) + len(single_config_queue)
-        self.set_report_folder_path(selected_group_name)
+        self.set_report_folder_path(selected_group_name,config_report_root)
         self.run_async_task(async_config_queue)
         self.run_single_task(single_config_queue)
         print("[+]Data ready")

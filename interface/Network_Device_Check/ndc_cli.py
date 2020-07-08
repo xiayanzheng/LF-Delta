@@ -18,7 +18,9 @@ class Cli:
 
     def load_config(self):
         config_file_path = DaPr.find_path_backward(os.getcwd(), 'config')
-        config_index = Infra.read_yaml(config_file_path, "ndc_app_config.yaml")['config_file_location']
+        app_config = Infra.read_yaml(config_file_path, "ndc_app_config.yaml")
+        config_index = app_config['config_file_location']
+        config_report_root = app_config['report_file_root']
         cfg_list = ["commands", "tasks", "groups", "accounts", "regx_rules"]
         for cfg_i in cfg_list:
             file = config_index[cfg_i]
@@ -29,7 +31,7 @@ class Cli:
             setattr(NdcHub, cfg_i, cfg_v)
         self.repack_account()
         selected_group_name, selected_group = self.select_group(NdcHub.groups)
-        return selected_group_name, selected_group
+        return selected_group_name, selected_group, config_report_root
 
     @staticmethod
     def select_group(groups):
@@ -49,9 +51,12 @@ class Cli:
         return selected_group_name, groups[selected_group_name]
 
     @staticmethod
-    def set_report_folder_path(selected_group_name):
+    def set_report_folder_path(selected_group_name, config_report_root):
         f_name = "{}_{}".format(selected_group_name, Format.CurrentTime.YYYYMMDD)
-        NdcHub.report_folder_path = os.path.join(DaPr.find_path_backward(os.getcwd(), "Reports"), f_name)
+        config_report_root_r = DaPr.find_path_backward(os.getcwd(), "Reports")
+        if "\\" in config_report_root or "/" in config_report_root and os.path.isdir(config_report_root):
+            config_report_root_r = config_report_root
+        NdcHub.report_folder_path = os.path.join(config_report_root_r, f_name)
         Infra.handle_folder_file_path(NdcHub.report_folder_path)
         return NdcHub.report_folder_path
 
