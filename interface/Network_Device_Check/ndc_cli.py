@@ -64,12 +64,15 @@ class Cli:
     @simple_err_log()
     def repack_account():
         sec_key = b'CiA6fx3T043gEkay37G8D200ZJ5WuKJdh9hbdvTRHL8='
-        decrypt_accounts = {}
         accounts = NdcHub.accounts
-        for k, v in accounts.items():
-            new_inner = {}
-            for k2, v2 in v.items():
-                key = Security.decrypt(sec_key, v2)
-                new_inner[k2] = key.decode()
-            decrypt_accounts[k] = new_inner
-        NdcHub.accounts = decrypt_accounts
+        try:
+            decrypt_accounts = {}
+            for k, v in accounts.items():
+                new_inner = {}
+                for k2, v2 in v.items():
+                    key = Security.decrypt(sec_key, v2)
+                    new_inner[k2] = key.decode()
+                decrypt_accounts[k] = new_inner
+            NdcHub.accounts = decrypt_accounts
+        except:
+            pass
