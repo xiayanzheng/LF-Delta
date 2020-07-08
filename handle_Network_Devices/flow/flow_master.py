@@ -83,5 +83,5 @@ class Interface(Cli):
         print("[+]Merging reports")
         file_ext = '_merged_report.xlsx'
         output_file = os.path.join(report_folder_path, os.path.split(report_folder_path)[-1] + file_ext)
-        mergeReports.merge_direct(report_folder_path, output_file, transpose_index_and_columns=True)
+        mergeReports.merge(report_folder_path, output_file, transpose_index_and_columns=True)
 

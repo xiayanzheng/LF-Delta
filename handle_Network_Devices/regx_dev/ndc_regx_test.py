@@ -1,6 +1,6 @@
 import re
 
-from handle_Network_Devices.nd_data_processor.common_process import CommonDataProcess
+from handle_Network_Devices.pipline.common_process import CommonDataProcess
 from lfcomlib.Jessica import Infra
 from lfcomlib.Jessica import DaPr
 

@@ -1,5 +1,25 @@
-from init.init_imports import Infra, Save, DaPr, Numbers, wmi_evt_qu, global_config, datetime
-from init.init_imports import psutil, socket, platform, wmi, subprocess, netifaces, show_status, winreg, os
+from init.init_imports import global_config
+import datetime
+import psutil
+import socket
+import platform
+import wmi
+import subprocess
+import netifaces
+import winreg
+import os
+from common.Utl import show_status
+from lfcomlib.Jessica import Infra
+from lfcomlib.Jessica import Save
+from lfcomlib.Jessica import DaPr
+from lfcomlib.Jessica import Numbers
+from lfcomlib.Jessica.LogWin import GetWindowsEventLogByWmiQuery
+
+wmi_evt_qu = GetWindowsEventLogByWmiQuery()
+Infra = Infra.Core()
+Save = Save.Core()
+DaPr = DaPr.Core()
+Numbers = Numbers.Core()
 
 
 class Entry:
@@ -48,7 +68,7 @@ class Entry:
             for k, v in info.items():
                 data.append({'item': k, 'data': v})
             if not debug:
-                Save.to_csv(log_path, log_file, header, data)
+                Save.to_csv(header, data,log_path, log_file,)
             self.all_data = info
 
         get_hardware_info()
@@ -116,7 +136,7 @@ class Entry:
         else:
             key = ['result']
             base = [{'result': 'No data'}]
-        Save.to_csv(log_path, log_file, key, base)
+        Save.to_csv(key, base,log_path, log_file,)
 
     @show_status
     def get_ping_result(self, ip, log_path, log_file):
@@ -150,7 +170,7 @@ class Entry:
 
         def save():
             keys = list(all_license[0].keys())
-            Save.to_csv(log_path, log_file, keys, all_license)
+            Save.to_csv(keys, all_license,log_path, log_file,)
 
         windows()
         if not debug:
@@ -162,7 +182,7 @@ class Entry:
         data_f = []
         for k, v in self.all_data.items():
             data_f.append({headers[0]: k, headers[1]: v})
-        Save.to_csv(log_path, log_file, headers, data_f)
+        Save.to_csv(headers, data_f, log_path, log_file)
 
     @show_status
     def get_installed_software(self, log_path, log_file):
@@ -178,7 +198,7 @@ class Entry:
                     installed_temp[key] = None
             installed.append(installed_temp)
         keys = list(installed[0].keys())
-        Save.to_csv(log_path, log_file, keys, installed)
+        Save.to_csv(keys, installed, log_path, log_file)
 
     @show_status
     def get_windows_update_status(self, log_path, log_file, debug=False):
@@ -194,7 +214,7 @@ class Entry:
                 all_data.append(unit)
             n_key = list(all_data[0].keys())
             if not debug_c:
-                Save.to_csv(log_path_c, log_file_c, n_key, all_data)
+                Save.to_csv(n_key, all_data, log_path_c, log_file_c,)
             return all_data
 
         def get_windows_date():

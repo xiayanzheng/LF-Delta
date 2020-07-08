@@ -3,7 +3,7 @@ from netmiko.ssh_exception import NetMikoTimeoutException
 
 from common.data_hub import NdcHub
 from handle_Network_Devices.cisco.connector import Connection
-from handle_Network_Devices.nd_data_processor.pipeline import PackDeviceData
+from handle_Network_Devices.pipline.data_process import PackDeviceData
 
 
 class Dec:

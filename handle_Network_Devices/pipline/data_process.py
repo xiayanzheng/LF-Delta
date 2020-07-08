@@ -1,7 +1,7 @@
 import os
 
 from common.data_hub import NdcHub
-from handle_Network_Devices.nd_data_processor.data_cleanner import DataCleaner
+from handle_Network_Devices.pipline.data_cleanner import DataCleaner
 from lfcomlib.Jessica import DaPr
 from lfcomlib.Jessica import Format
 from lfcomlib.Jessica import Infra
