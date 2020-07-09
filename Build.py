@@ -1,10 +1,10 @@
 import os
 
-import prettytable
-
+from lfcomlib.Jessica import DaPr
 from lfcomlib.Jessica import Infra
 
 Infra = Infra.Core()
+DaPr = DaPr.Core()
 
 
 class BuildTools:
@@ -13,21 +13,17 @@ class BuildTools:
         self.builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
         self.root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
         self.tools = [
+            "build_delta",
             "build_info_collector",
             "build_network_device_check",
             "build_msg_encrypt_tool"
         ]
 
     def build(self):
-        pt = prettytable.PrettyTable()
-        pt.field_names = ["ID", "Tool"]
-        for i in range(len(self.tools)):
-            no = i
-            tool = self.tools[i]
-            pt.add_row([no, tool])
-        print(pt)
-        selected = input("Tool ID >")
-        getattr(self, self.tools[int(selected)])()
+        table_head = ["ID", "Tool"]
+        txt = "Tool ID >"
+        selected = DaPr.show_selection_table(self.tools, table_head, txt)
+        getattr(self, selected)()
 
     def build_info_collector(self):
         tool_name = "infoCollector"
@@ -58,6 +54,10 @@ class BuildTools:
     def build_msg_encrypt_tool(self):
         params = "-F --hidden-import win32timezone "
         os.system("{} {} {}".format(self.builder, params, "MsgEncryptTool.py"))
+
+    def build_delta(self):
+        params = "-F --hidden-import win32timezone "
+        os.system("{} {} {}".format(self.builder, params, "Delta.py"))
 
 
 bt = BuildTools()

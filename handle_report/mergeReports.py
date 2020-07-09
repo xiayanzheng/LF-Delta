@@ -14,7 +14,8 @@ def merge(folder_or_name, output_file, show_msg=False, init_path=False, transpos
         dfs = load_data(folder_or_name, show_msg)
         merge_data(dfs, output_file, transpose_index_and_columns)
     else:
-        report_folder, report_objs, report_objs_dev, report_objs_dev_objs = Sdc_Cli.init_merge_report_path(folder_or_name)
+        report_folder, report_objs, report_objs_dev, report_objs_dev_objs = Sdc_Cli.init_merge_report_path(
+            folder_or_name)
         output_file = report_objs_dev + '_merged_report.xlsx'
         print(report_objs_dev)
         dfs = []
@@ -39,20 +40,22 @@ def load_data(report_folder, show_msg=False, check_file_name=None):
         if os.path.splitext(obj)[-1] == '.csv' in obj:
             if check_file_name is not None:
                 for x in check_file_name:
-                    if x not in obj:
-                        print(obj)
-                        break
-            csv_file = os.path.join(report_folder, obj)
-            print("SSSS",csv_file)
-            if show_msg:
-                print(csv_file)
-            csv_data = read_csv(csv_file, encoding='gb18030')
-            if show_msg:
-                print(csv_data)
-            print(csv_file)
-            csv_data.set_index('item', inplace=True)
-            dfs.append(csv_data)
+                    if x in obj:
+                        dfs.append(csv_to_df(report_folder, obj))
+            else:
+                dfs.append(csv_to_df(report_folder, obj))
     return dfs
+
+
+def csv_to_df(report_folder, obj, show_msg=False):
+    csv_file = os.path.join(report_folder, obj)
+    if show_msg:
+        print(csv_file)
+    csv_data = read_csv(csv_file, encoding='gb18030')
+    if show_msg:
+        print(csv_data)
+    csv_data.set_index('item', inplace=True)
+    return csv_data
 
 
 def merge_data(dfs, output_file, transpose_index_and_columns=False):

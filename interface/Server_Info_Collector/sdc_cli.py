@@ -3,6 +3,7 @@ import prettytable
 from init.init_imports import global_config as gc
 from lfcomlib.Jessica import Infra
 from lfcomlib.Jessica import DaPr
+from interface.Server_Info_Collector.show_sic_title import show_sic_title
 Infra = Infra.Core()
 DaPr = DaPr.Core()
 
@@ -11,8 +12,7 @@ class SdcCli:
 
     @staticmethod
     def intro():
-        os.system("cls")
-        print("Delta Version:{}".format(gc.version))
+        show_sic_title()
 
     def add_group(self):
         new_group_name = str(input("Pls input a new group name："))
