@@ -60,7 +60,6 @@ class SicCli:
             if group_name in report_objs[i]:
                 index = str(count)
                 repo_name = report_objs[i]
-                print(">>", repo_name)
                 if os.path.isdir(os.path.join(report_root, repo_name)):
                     pt.add_row([index, repo_name])
                     repo_selections[index] = repo_name
