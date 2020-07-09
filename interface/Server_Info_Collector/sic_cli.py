@@ -8,7 +8,7 @@ Infra = Infra.Core()
 DaPr = DaPr.Core()
 
 
-class SdcCli:
+class SicCli:
 
     @staticmethod
     def intro():
@@ -70,7 +70,6 @@ class SdcCli:
         if selected in list(repo_selections.keys()):
             report_objs_dev = os.path.join(report_root, repo_selections[selected])
             report_objs_dev_objs = os.listdir(report_objs_dev)
-            print(report_objs_dev)
             return report_root, report_objs, report_objs_dev, report_objs_dev_objs
         else:
             print("Selected Group is not exists")

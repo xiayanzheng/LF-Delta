@@ -65,14 +65,15 @@ class Cli:
     @simple_err_log()
     def repack_account():
         accounts = NdcHub.accounts
-        try:
-            decrypt_accounts = {}
-            for k, v in accounts.items():
-                new_inner = {}
-                for k2, v2 in v.items():
+        decrypt_accounts = {}
+        for k, v in accounts.items():
+            new_inner = {}
+            for k2, v2 in v.items():
+                if len(v2) > 50:
                     key = Security.decrypt(Salt.sec, v2)
                     new_inner[k2] = key.decode()
+                else:
+                    new_inner[k2] = v2
                 decrypt_accounts[k] = new_inner
-            NdcHub.accounts = decrypt_accounts
-        except:
-            pass
+        NdcHub.accounts = decrypt_accounts
+

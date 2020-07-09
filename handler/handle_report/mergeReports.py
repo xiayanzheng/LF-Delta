@@ -2,11 +2,11 @@ import os
 
 from pandas import read_csv
 
-from interface.Server_Info_Collector import sdc_cli
+from interface.Server_Info_Collector import sic_cli
 from lfcomlib.Jessica import DaPr
 
 DaPr = DaPr.Core()
-Sdc_Cli = sdc_cli.SdcCli()
+Sdc_Cli = sic_cli.SicCli()
 
 
 def merge(folder_or_name, output_file, show_msg=False, init_path=False, transpose_index_and_columns=False):
@@ -17,17 +17,14 @@ def merge(folder_or_name, output_file, show_msg=False, init_path=False, transpos
         report_folder, report_objs, report_objs_dev, report_objs_dev_objs = Sdc_Cli.init_merge_report_path(
             folder_or_name)
         output_file = report_objs_dev + '_merged_report.xlsx'
-        print(report_objs_dev)
         dfs = []
         for folder in report_objs_dev_objs:
             report_objs_dev_sub = os.path.join(report_objs_dev, folder)
             if show_msg:
                 print("report_objs_dev_sub", report_objs_dev_sub)
-            print(report_objs_dev_sub)
             sub_dfs = load_data(report_objs_dev_sub, show_msg, check_file_name=['summary'])
             if sub_dfs is not None:
                 dfs.extend(sub_dfs)
-            print(sub_dfs)
         merge_data(dfs, output_file, transpose_index_and_columns)
         return report_folder, output_file
 

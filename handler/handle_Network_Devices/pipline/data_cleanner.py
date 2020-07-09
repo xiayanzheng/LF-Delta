@@ -1,4 +1,4 @@
-from handle_Network_Devices.pipline.common_process import CommonDataProcess
+from handler.handle_Network_Devices.pipline.common_process import CommonDataProcess
 
 
 class DataCleaner(CommonDataProcess):

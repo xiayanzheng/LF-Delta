@@ -1,7 +1,7 @@
 import asyncio
 import netdev
 from common.data_hub import NdcHub
-from handle_Network_Devices.pipline.data_process import PackDeviceData
+from handler.handle_Network_Devices.pipline.data_process import PackDeviceData
 
 
 async def task(cfg):

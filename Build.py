@@ -13,20 +13,20 @@ class BuildTools:
         self.builder = "D:\\Python374\\Scripts\\pyinstaller.exe"
         self.root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
         self.tools = [
-            "build_delta",
-            "build_info_collector",
-            "build_network_device_check",
-            "build_msg_encrypt_tool"
+            ["build_delta"],
+            ["build_info_collector"],
+            ["build_network_device_check"],
+            ["build_msg_encrypt_tool"]
         ]
 
     def build(self):
         table_head = ["ID", "Tool"]
         txt = "Tool ID >"
         selected = DaPr.show_selection_table(self.tools, table_head, txt)
-        getattr(self, selected)()
+        getattr(self, selected[1])()
 
     def build_info_collector(self):
-        tool_name = "infoCollector"
+        tool_name = "ServerInfoCollector"
         params = "-F "
         target = "{}\\{}.py".format(self.root, tool_name)
         dis_dir = "{}\\dist\\".format(self.root)
@@ -52,7 +52,7 @@ class BuildTools:
         os.system("{} {} {}".format(self.builder, params, "NDCheck.py"))
 
     def build_msg_encrypt_tool(self):
-        params = "-F --hidden-import win32timezone "
+        params = "-F "
         os.system("{} {} {}".format(self.builder, params, "MsgEncryptTool.py"))
 
     def build_delta(self):

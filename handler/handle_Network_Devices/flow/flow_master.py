@@ -1,10 +1,9 @@
 import asyncio
 import os
 from common.data_hub import NdcHub
-from handle_Network_Devices.flow import flow_async
-from handle_Network_Devices.flow.flow_single import Dec
-from handle_Network_Devices.flow import show_title
-from handle_report import mergeReports
+from handler.handle_Network_Devices.flow.flow_single import Dec
+from handler.handle_Network_Devices.flow import show_title, flow_async
+from handler.handle_report import mergeReports
 from interface.Network_Device_Check.ndc_cli import Cli
 from lfcomlib.Jessica import DaPr
 from lfcomlib.Jessica import Infra

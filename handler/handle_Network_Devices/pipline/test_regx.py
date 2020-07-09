@@ -1,6 +1,6 @@
 import re
 from lfcomlib.Jessica import Infra
-from handle_Network_Devices.pipline.common_process import CommonDataProcess
+from handler.handle_Network_Devices.pipline import CommonDataProcess
 
 cdp = CommonDataProcess()
 

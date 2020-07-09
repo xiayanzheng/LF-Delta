@@ -1,6 +1,6 @@
-from handle_server.pipeline import get_server_info
+from handler.handle_server.pipeline import get_server_info
 from init.init_imports import global_config as gc
-from handle_report import mergeReports
+from handler.handle_report import mergeReports
 import socket
 import os
 import datetime
@@ -36,4 +36,5 @@ class CommonProcess(get_server_info.Entry):
     @staticmethod
     def merge_reports(group_name):
         return mergeReports.merge(group_name)
+
 

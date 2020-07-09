@@ -1,18 +1,20 @@
-from init.init_imports import global_config
 import datetime
-import psutil
-import socket
-import platform
-import wmi
-import subprocess
-import netifaces
-import winreg
 import os
+import platform
+import socket
+import subprocess
+import winreg
+
+import netifaces
+import psutil
+import wmi
+
 from common.Utl import show_status
-from lfcomlib.Jessica import Infra
-from lfcomlib.Jessica import Save
+from init.init_imports import global_config
 from lfcomlib.Jessica import DaPr
+from lfcomlib.Jessica import Infra
 from lfcomlib.Jessica import Numbers
+from lfcomlib.Jessica import Save
 from lfcomlib.Jessica.LogWin import GetWindowsEventLogByWmiQuery
 
 wmi_evt_qu = GetWindowsEventLogByWmiQuery()
@@ -68,7 +70,7 @@ class Entry:
             for k, v in info.items():
                 data.append({'item': k, 'data': v})
             if not debug:
-                Save.to_csv(header, data,log_path, log_file,)
+                Save.to_csv(header, data, log_path, log_file, )
             self.all_data = info
 
         get_hardware_info()
@@ -115,8 +117,6 @@ class Entry:
             fi_data[k]['ipv4'] = v[1][1]
             fi_data[k]['mask'] = v[1][2]
 
-        print(fi_data)
-
     @show_status
     def get_event_log(self, cfg_set, log_path, log_file):
         wmi_evt_qu.disable_insertion_strings = False
@@ -136,7 +136,7 @@ class Entry:
         else:
             key = ['result']
             base = [{'result': 'No data'}]
-        Save.to_csv(key, base,log_path, log_file,)
+        Save.to_csv(key, base, log_path, log_file, )
 
     @show_status
     def get_ping_result(self, ip, log_path, log_file):
@@ -170,7 +170,7 @@ class Entry:
 
         def save():
             keys = list(all_license[0].keys())
-            Save.to_csv(keys, all_license,log_path, log_file,)
+            Save.to_csv(keys, all_license, log_path, log_file, )
 
         windows()
         if not debug:
@@ -214,7 +214,7 @@ class Entry:
                 all_data.append(unit)
             n_key = list(all_data[0].keys())
             if not debug_c:
-                Save.to_csv(n_key, all_data, log_path_c, log_file_c,)
+                Save.to_csv(n_key, all_data, log_path_c, log_file_c, )
             return all_data
 
         def get_windows_date():

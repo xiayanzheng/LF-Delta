@@ -1,8 +1,8 @@
 import os
 
-from handle_report import mergeReports
-from handle_server.pipeline import common_process
-from interface.Server_Info_Collector import sdc_cli
+from handler.handle_report import mergeReports
+from handler.handle_server.pipeline import common_process
+from interface.Server_Info_Collector import sic_cli
 from lfcomlib.Jessica import Infra
 
 Infra = Infra.Core()
@@ -12,7 +12,7 @@ hscp = common_process.CommonProcess()
 def main():
     # log_path, log_folder = set_path_and_select_group("SMBC")
     # get_server_data(log_path)
-    Sdc_Cli = sdc_cli.SdcCli()
+    Sdc_Cli = sic_cli.SicCli()
     group_name = Sdc_Cli.select_group()
     msg = "input [1] for get server status\ninput [2] for merge report\ninput [3] for reselect："
     selected_function = int(input(msg))
