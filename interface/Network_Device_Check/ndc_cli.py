@@ -1,7 +1,6 @@
 import os
 
 import prettytable
-
 from common.data_hub import NdcHub
 from common.data_hub import Salt
 from lfcomlib.Jessica import DaPr

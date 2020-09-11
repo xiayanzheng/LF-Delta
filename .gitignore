@@ -8,6 +8,19 @@ __pycache__/
 # C extensions
 *.so
 
+# Log
+log/
+Reports/
+
+# Excel
+*.xls
+*.xlsx
+*.csv
+
+#upx
+upx*/
+
+
 # Distribution / packaging
 .Python
 build/
