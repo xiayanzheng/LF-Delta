@@ -18,6 +18,14 @@ u_show_env_all_tempature:
   cmd: show env all
   rule: ru3
   save_to: csv
+3850_show_env_all_tempature:
+  cmd: show env all
+  rule: ru5
+  save_to: csv
+3850_show_env_all_power:
+  cmd: show env all
+  rule: 3850_show_env_all_power
+  save_to: csv  
 u_show_logging:
   cmd: show logging
   rule: transparent
@@ -32,7 +40,7 @@ u_show_interface_status_err_disabled:
   save_to: csv
 u_show_version:
   cmd: show version
-  rule: ru8
+  rule: u_show_env_all
   save_to: csv
 u_show_switch:
   cmd: show switch

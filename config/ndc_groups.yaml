@@ -3,107 +3,219 @@ GWAN:
     desc: CHCS2-MS-H01
     host: 10.98.102.243
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_3850_New]
   AMS_GWAN_SW_2:
     desc: CHCS2-SS-H01
     host: 10.98.102.242
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_SW_3:
     desc: CHCS2-SS-H01
     host: 10.98.102.241
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_SW_4:
     desc: CHCS2-ES-H02
     host: 10.98.102.240
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X_stack]
   AMS_GWAN_SW_5:
     desc: CHCS2-ES-H03
     host: 10.98.102.239
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_SW_6:
     desc: CHCS2-ES-H04
     host: 10.98.102.238
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_SW_7:
     desc: CHCS2-ES-H06
     host: 10.98.102.236
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_SW_8:
     desc: CHCS2-ES-H07
     host: 10.98.102.235
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_ios
     tasks: [Cisco_2960X]
   AMS_GWAN_AC_1:
     desc: CHCS2-WC-H01
     host: 10.98.102.245
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_wlc_ssh
     tasks: [Cisco_AC_AP]
   AMS_GWAN_AC_2:
     desc: CHCS2-WC-H02
     host: 10.98.102.244
     port: 0
-    account: 001
+    account: AMS
     device_type: cisco_wlc_ssh
     tasks: [Cisco_AC_AP]
+AMSCS-Internet:
+    CHCS2-xMS-I01:
+        desc: WS-C2960L-24PS-LL-FCW2251B3GV
+        host: 192.168.1.250
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-xSpare1:
+        desc: WS-C2960L-24PS-LL-FCW2251A36J
+        host: 192.168.1.242
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-xES-I01:
+        desc: WS-C2960L-16PS-FCW2309A3L8
+        host: 192.168.1.249
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-xES-I02:
+        desc: WS-C2960L-16PS-FCW2309A3ME
+        host: 192.168.1.248
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-xSpare2:
+        desc: WS-C2960L-16PS-FCW2309A3GD
+        host: 192.168.1.241
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS-xMS-I01:
+        desc: WS-C2960L-24TS-FCW2313A2TB
+        host: 192.168.1.251
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS-xFW-I01:
+        desc: Cisco-ASA5505-JMX2305G2AK
+        host: 192.168.1.254
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-xWC-I01:
+        desc: AIR-CT2504-K9-PSZ21501JUK
+        host: 192.168.1.253
+        port: 0
+        account: AMS
+        device_type: cisco_wlc_ssh
+        tasks: [Cisco_AC_AP]
+    CHCS2-xWC-I02:
+        desc: AIR-CT2504-K9-PSZ21501JUT
+        host: 192.168.1.252
+        port: 0
+        account: AMS
+        device_type: cisco_wlc_ssh
+        tasks: [Cisco_AC_AP]
+AMSCS-Production:
+    CHCS2-fMS-P01:
+        desc: FCW2140D0MF-WS-C3850-24S
+        host: 192.168.254.252
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_3850_New]
+    CHCS2-fSS-P01-01:
+        desc: FCW2313A2S8-WS-C2960L-24TS
+        host: 192.168.254.251
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P01-02:
+        desc: FCW2313A2SW-WS-C2960L-24TS
+        host: 192.168.254.250
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P02:
+        desc: FCW2310B285-WS-C2960L-24TS
+        host: 192.168.254.249
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P03:
+        desc: FCW2313A2T8-WS-C2960L-24TS
+        host: 192.168.254.248
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P04:
+        desc: FCW2313A2U0-WS-C2960L-24TS
+        host: 192.168.254.247
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P05:
+        desc: FCW2313A2U1-WS-C2960L-24TS
+        host: 192.168.254.246
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fES-P06:
+        desc: FCW2313A2TV-WS-C2960L-24TS
+        host: 192.168.254.245
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fSpare1:
+        desc: FCW2313A2RG-WS-C2960L-24TS
+        host: 192.168.254.244
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
+    CHCS2-fSpare2:
+        desc: FCW2313A2T7-WS-C2960L-24TS
+        host: 192.168.254.243
+        port: 0
+        account: AMS
+        device_type: cisco_ios
+        tasks: [Cisco_2960X]
 Test:
-  AMS_GWAN_SW_8:
-    desc: CHCS2-ES-H07
-    host: 10.98.102.235
-    port: 0
-    account: 001
-    device_type: cisco_ios
-    tasks: [Cisco_2960X]
-  AMS_GWAN_AC_1:
-    desc: CHCS2-WC-H01
-    host: 10.98.102.245
-    port: 0
-    account: 001
-    device_type: cisco_wlc_ssh
-    tasks: [Cisco_AC_AP]
-Test_2:
-  AMS_GWAN_AC_1:
-    desc: CHCS2-WC-H01
-    host: 10.98.102.245
-    port: 0
-    account: 001
-    device_type: cisco_wlc_ssh
-    tasks: [Cisco_AC_AP]
-async_test:
-  AMS_GWAN_SW_7:
-    desc: CHCS2-ES-H06
-    host: 10.98.102.236
-    port: 0
-    account: 001
-    device_type: cisco_ios
-    tasks: [Cisco_2960X]
-  AMS_GWAN_SW_8:
-    desc: CHCS2-ES-H07
-    host: 10.98.102.235
-    port: 0
-    account: 001
-    device_type: cisco_ios
-    tasks: [Cisco_2960X]
+    CHCS2-xWC-I01:
+        desc: AIR-CT2504-K9-PSZ21501JUK
+        host: 192.168.1.253
+        port: 0
+        account: AMS
+        device_type: cisco_wlc_ssh
+        tasks: [Cisco_AC_AP]
+    CHCS2-xWC-I02:
+        desc: AIR-CT2504-K9-PSZ21501JUT
+        host: 192.168.1.252
+        port: 0
+        account: AMS
+        device_type: cisco_wlc_ssh
+        tasks: [Cisco_AC_AP]

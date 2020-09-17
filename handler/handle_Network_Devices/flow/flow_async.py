@@ -13,17 +13,21 @@ async def task(cfg):
         "secret": cfg["enablepass"],
         "host": cfg["host"]
     }
-    async with netdev.create(**connect_param) as netdev_device:
-        task_list = cfg['tasks']
-        cfg["hostname"] = netdev_device.base_prompt
-        dc = PackDeviceData()
-        for task_i in task_list:
-            for cmd_name in NdcHub.tasks[task_i]['commands']:
-                cmd_cfg = NdcHub.commands[cmd_name]
-                real_cmd = cmd_cfg['cmd']
-                data = await netdev_device.send_command(real_cmd)
-                dc.pipeline_flow(cmd_name, cmd_cfg, data, **cfg)
-        dc.export_data_to_csv()
+    try:
+        async with netdev.create(**connect_param) as netdev_device:
+            task_list = cfg['tasks']
+            cfg["hostname"] = netdev_device.base_prompt
+            dc = PackDeviceData()
+            for task_i in task_list:
+                for cmd_name in NdcHub.tasks[task_i]['commands']:
+                    cmd_cfg = NdcHub.commands[cmd_name]
+                    real_cmd = cmd_cfg['cmd']
+                    data = await netdev_device.send_command(real_cmd)
+                    dc.pipeline_flow(cmd_name, cmd_cfg, data, **cfg)
+            dc.export_data_to_csv()
+    except Exception as e:
+        print(e)
+        pass
 
 
 async def run(devices):

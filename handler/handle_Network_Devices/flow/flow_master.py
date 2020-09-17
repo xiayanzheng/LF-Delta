@@ -26,9 +26,9 @@ class Interface(Cli):
         self.run_single_task(single_config_queue)
         print("[+]Data ready")
         self.merge_report_flow(NdcHub.report_folder_path)
+        os.system("pause")
 
     @staticmethod
-    @simple_err_log()
     def run_async_task(config_queue):
         # print(config_queue)
         if len(config_queue) > 0:
@@ -36,7 +36,6 @@ class Interface(Cli):
             loop.run_until_complete(flow_async.run(config_queue))
 
     @staticmethod
-    @simple_err_log()
     def run_single_task(config_queue):
         if len(config_queue) > 0:
             flow_single = Dec()
@@ -79,8 +78,15 @@ class Interface(Cli):
     @staticmethod
     @simple_err_log()
     def merge_report_flow(report_folder_path):
-        print("[+]Merging reports")
-        file_ext = '_merged_report.xlsx'
-        output_file = os.path.join(report_folder_path, os.path.split(report_folder_path)[-1] + file_ext)
-        mergeReports.merge(report_folder_path, output_file, transpose_index_and_columns=True)
+        if not os.path.isdir(report_folder_path):
+            print("[!]Cannot find result data")
+        else:
+            try:
+                print("[+]Merging reports")
+                file_ext = '_merged_report.xlsx'
+                output_file = os.path.join(report_folder_path, os.path.split(report_folder_path)[-1] + file_ext)
+                mergeReports.merge(report_folder_path, output_file, transpose_index_and_columns=True)
+                print("[+]Reports Merged")
+            except:
+                pass
 

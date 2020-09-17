@@ -70,10 +70,13 @@ class PackDeviceData:
             pass
 
     def export_data_to_csv(self):
-        print("[+]Writing data to csv")
-        Save.to_csv(self.result_head, self.result_data_temp_store, NdcHub.report_folder_path,
-                    self.set_report_file_name())
-        self.result_data_temp_store = []
+        if len(self.result_data_temp_store) == 0:
+            print("[!]Cannot find result data")
+        else:
+            print("[+]Writing data to csv")
+            Save.to_csv(self.result_head, self.result_data_temp_store, NdcHub.report_folder_path,
+                        self.set_report_file_name())
+            self.result_data_temp_store = []
 
     @staticmethod
     def show_progress():

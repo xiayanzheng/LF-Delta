@@ -4,6 +4,7 @@ from netmiko.ssh_exception import NetMikoTimeoutException
 from common.data_hub import NdcHub
 from handler.handle_Network_Devices.cisco.connector import Connection
 from handler.handle_Network_Devices.pipline.data_process import PackDeviceData
+from lfcomlib.Jessica.Log import simple_err_log
 
 
 class Dec:
@@ -13,15 +14,19 @@ class Dec:
         pdd = PackDeviceData()
         for device_cfg in cfg:
             conn = Connect("", "", "", "")
-            device = conn.connect_device_i(**device_cfg)
-            device_cfg["hostname"] = device.get_hostname()
-            task_list = device_cfg['tasks']
-            for task_i in task_list:
-                for cmd_name in NdcHub.tasks[task_i]['commands']:
-                    cmd_cfg = NdcHub.commands[cmd_name]
-                    real_cmd = cmd_cfg['cmd']
-                    data = device.show(real_cmd, True)
-                    pdd.pipeline_flow(cmd_name, cmd_cfg, data, **device_cfg)
+            try:
+                device = conn.connect_device_i(**device_cfg)
+                device_cfg["hostname"] = device.get_hostname()
+                task_list = device_cfg['tasks']
+                for task_i in task_list:
+                    for cmd_name in NdcHub.tasks[task_i]['commands']:
+                        cmd_cfg = NdcHub.commands[cmd_name]
+                        real_cmd = cmd_cfg['cmd']
+                        data = device.show(real_cmd, True)
+                        pdd.pipeline_flow(cmd_name, cmd_cfg, data, **device_cfg)
+            except:
+                print("[!]Cannot connect to device")
+                pass
         pdd.export_data_to_csv()
 
 
