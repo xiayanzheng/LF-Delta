@@ -71,7 +71,7 @@ GWAN:
     tasks: [Cisco_AC_AP]
 AMSCS-Internet:
     CHCS2-xMS-I01:
-        desc: WS-C2960L-24PS-LL-FCW2251B3GV
+        desc: WS-C2960L-24PS-LL FCW2251B3GV
         host: 192.168.1.250
         port: 0
         account: AMS
