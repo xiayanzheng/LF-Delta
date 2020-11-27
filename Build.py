@@ -6,7 +6,6 @@ from lfcomlib.Jessica import Infra
 Infra = Infra.Core()
 DaPr = DaPr.Core()
 
-
 class BuildTools:
 
     def __init__(self):
@@ -14,6 +13,7 @@ class BuildTools:
         self.root = "E:\\Documents\\PD\\CodeOplex\\LF-Delta"
         self.tools = [
             ["build_delta"],
+            ["build_delta_as_one_file"],
             ["build_info_collector"],
             ["build_network_device_check"],
             ["build_msg_encrypt_tool"]
@@ -56,7 +56,16 @@ class BuildTools:
         os.system("{} {} {}".format(self.builder, params, "MsgEncryptTool.py"))
 
     def build_delta(self):
-        params = "-F --hidden-import win32timezone "
+        self.build_delta_inf(False)
+    
+    def build_delta_as_one_file(self):
+        self.build_delta_inf(True)
+
+    def build_delta_inf(self,is_one_file):
+        params = "--hidden-import win32timezone "
+        if is_one_file:
+            one_file_param = "-F "
+            params = one_file_param + params
         os.system("{} {} {}".format(self.builder, params, "Delta.py"))
 
 

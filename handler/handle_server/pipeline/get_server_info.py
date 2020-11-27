@@ -95,13 +95,12 @@ class Entry:
                 info["disk_info"].append(disk)
                 disk_info = info['disk_info']
                 head = list(disk_info[0].keys())
-                Save.to_csv(log_path, log_file, headers=head, data=disk_info)
+                Save.to_csv(head, disk_info, log_path, log_file)
                 for k, v in disk.items():
                     if k in ['total_gb', 'used_gb', 'free_gb', 'percentage_of_use']:
-                        sk = "{}_{}_{}".format(disk["disk"], disk["fstype"], k)
-                        sv = v
-                        self.all_data[sk] = sv
-            except:
+                        self.all_data["{}_{}_{}".format(disk["disk"], disk["fstype"], k)] = v
+            except Exception as e:
+                print(e)
                 pass
 
     @show_status
